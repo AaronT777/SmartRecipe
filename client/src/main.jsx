@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { Auth0ProviderWithNavigate } from './auth/Auth0ProviderWithNavigate'
 import './index.css'
 import App from './App.jsx'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
