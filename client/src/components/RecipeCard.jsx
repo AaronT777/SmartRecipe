@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { UserService } from '../services/api';
@@ -12,6 +12,24 @@ const RecipeCard = ({ recipe, showSaveButton = true, onUnsave = null }) => {
   
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  
+  // Check if the recipe is saved when component mounts
+  useEffect(() => {
+    const checkIfSaved = async () => {
+      if (isAuthenticated && user) {
+        try {
+          const savedRecipesResponse = await UserService.getSavedRecipes(getToken);
+          const savedRecipes = savedRecipesResponse.data;
+          const recipeIsSaved = savedRecipes.some(savedRecipe => savedRecipe._id === _id);
+          setIsSaved(recipeIsSaved);
+        } catch (err) {
+          console.error("Error checking if recipe is saved:", err);
+        }
+      }
+    };
+    
+    checkIfSaved();
+  }, [_id, isAuthenticated, user, getToken]);
   
   // Image fallback handler
   const handleImageError = (e) => {
@@ -77,16 +95,16 @@ const RecipeCard = ({ recipe, showSaveButton = true, onUnsave = null }) => {
             
             {showSaveButton && !isCreator && isAuthenticated && (
               <button 
-                className="btn btn-light save-btn"
+                className={`btn ${isSaved ? 'btn-success' : 'btn-outline-success'} save-btn`}
                 onClick={handleSaveRecipe}
                 disabled={isSaving || isSaved}
               >
                 {isSaving ? (
                   <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 ) : isSaved ? (
-                  <span>Saved</span>
+                  <span><i className="bi bi-bookmark-check"></i> Saved</span>
                 ) : (
-                  <span>Save</span>
+                  <span><i className="bi bi-bookmark"></i> Save</span>
                 )}
               </button>
             )}
