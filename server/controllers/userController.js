@@ -1,13 +1,53 @@
 // server/controllers/userController.js
-
 const User = require('../models/User');
 const Recipe = require('../models/Recipe');
+
+// Register/Login are now handled by Auth0, we only need to store user profile
+exports.registerOrUpdateUser = async (req, res) => {
+  try {
+    const { username, email } = req.body;
+    const auth0Id = req.user.id; // from auth middleware
+
+    // console.log("Auth0 ID from token:", auth0Id);
+    
+    // Check if user already exists
+    let user = await User.findOne({ auth0Id });
+    // console.log("Existing user found:", user);
+    
+    if (user) {
+      // Update existing user
+      user.username = username || user.username;
+      user.email = email || user.email;
+      await user.save();
+      return res.json(user);
+    }
+    
+    // Create new user
+    user = new User({
+      auth0Id,
+      username,
+      email
+    });
+    
+    await user.save();
+    // console.log("New user created:", user);
+    res.json(user);
+  } catch (err) {
+    console.error("User registration error:", err);
+    res.status(500).json({ msg: 'Server error', error: err.message });
+  }
+};
 
 // Get current user profile
 exports.getUserProfile = async (req, res) => {
   try {
-    // User is already loaded in the middleware
-    res.json(req.user);
+    const user = await User.findOne({ auth0Id: req.user.id });
+    
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+    
+    res.json(user);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
@@ -25,8 +65,8 @@ exports.updateUserProfile = async (req, res) => {
     if (email) profileFields.email = email;
     
     // Update user profile
-    const user = await User.findByIdAndUpdate(
-      req.user._id,
+    const user = await User.findOneAndUpdate(
+      { auth0Id: req.user.id },
       { $set: profileFields },
       { new: true }
     );
@@ -50,9 +90,14 @@ exports.saveRecipe = async (req, res) => {
       return res.status(404).json({ msg: 'Recipe not found' });
     }
     
-    // Check if recipe is already saved
-    const user = await User.findById(req.user._id);
+    // Find user by Auth0 ID
+    const user = await User.findOne({ auth0Id: req.user.id });
     
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+    
+    // Check if recipe is already saved
     if (user.savedRecipes.includes(recipeId)) {
       return res.status(400).json({ msg: 'Recipe already saved' });
     }
@@ -76,7 +121,12 @@ exports.saveRecipe = async (req, res) => {
 // Unsave a recipe
 exports.unsaveRecipe = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
+    // Find user by Auth0 ID
+    const user = await User.findOne({ auth0Id: req.user.id });
+    
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
     
     // Remove recipe from saved recipes
     user.savedRecipes = user.savedRecipes.filter(
@@ -95,7 +145,12 @@ exports.unsaveRecipe = async (req, res) => {
 // Get saved recipes
 exports.getSavedRecipes = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
+    // Find user by Auth0 ID
+    const user = await User.findOne({ auth0Id: req.user.id });
+    
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
     
     const savedRecipes = await Recipe.find({
       _id: { $in: user.savedRecipes }

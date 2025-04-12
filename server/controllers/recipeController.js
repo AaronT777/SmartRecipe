@@ -1,6 +1,7 @@
 // server/controllers/recipeController.js
 
 const Recipe = require("../models/Recipe");
+const User = require("../models/User");
 const path = require("path");
 
 // Get all recipes
@@ -26,7 +27,10 @@ exports.getRecipeById = async (req, res) => {
     // Check if user is authenticated to determine if the recipe is saved
     let isSaved = false;
     if (req.user) {
-      isSaved = req.user.savedRecipes.includes(recipe._id);
+      const user = await User.findOne({ auth0Id: req.user.id });
+      if (user) {
+        isSaved = user.savedRecipes.includes(recipe._id);
+      }
     }
 
     // Send recipe info with saved status
@@ -57,6 +61,12 @@ exports.createRecipe = async (req, res) => {
       instructions,
     } = req.body;
 
+    // Find user by Auth0 ID
+    const user = await User.findOne({ auth0Id: req.user.id });
+    if (!user) {
+      return res.status(404).json({ msg: "User not found in database" });
+    }
+
     // Create new recipe object
     const newRecipe = new Recipe({
       recipeName,
@@ -65,7 +75,7 @@ exports.createRecipe = async (req, res) => {
       calories,
       ingredients: JSON.parse(ingredients),
       instructions,
-      userId: req.user._id,
+      userId: user._id, // Use MongoDB ObjectId from our database
       image: req.file ? `/uploads/recipes/${req.file.filename}` : null,
     });
 
@@ -86,8 +96,14 @@ exports.updateRecipe = async (req, res) => {
       return res.status(404).json({ msg: "Recipe not found" });
     }
 
+    // Find user by Auth0 ID
+    const user = await User.findOne({ auth0Id: req.user.id });
+    if (!user) {
+      return res.status(404).json({ msg: "User not found in database" });
+    }
+
     // Check user owns the recipe
-    if (recipe.userId.toString() !== req.user._id.toString()) {
+    if (recipe.userId.toString() !== user._id.toString()) {
       return res.status(401).json({ msg: "User not authorized" });
     }
 
@@ -138,8 +154,14 @@ exports.deleteRecipe = async (req, res) => {
       return res.status(404).json({ msg: "Recipe not found" });
     }
 
+    // Find user by Auth0 ID
+    const user = await User.findOne({ auth0Id: req.user.id });
+    if (!user) {
+      return res.status(404).json({ msg: "User not found in database" });
+    }
+
     // Check user owns the recipe
-    if (recipe.userId.toString() !== req.user._id.toString()) {
+    if (recipe.userId.toString() !== user._id.toString()) {
       return res.status(401).json({ msg: "User not authorized" });
     }
 

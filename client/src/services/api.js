@@ -1,144 +1,150 @@
 // client/src/services/api.js
-
 import axios from "axios";
-import { useAuth0 } from "@auth0/auth0-react"; // Import useAuth0 hook, not individual functions
 
 // Create an axios instance with the base URL
 const API = axios.create({
-  // Use relative path for production and localhost for development
   baseURL: import.meta.env.VITE_API_URL || '/api',
 });
 
-// Factory function to create authorized API instance with the token
-// NOTE: This must be used within a component/hook where useAuth0 is available
-export const createAuthorizedAPI = async () => {
-  try {
-    // Get the useAuth0 hook from the current context
-    const { getAccessTokenSilently } = useAuth0();
-    
-    // Get token from Auth0
-    const token = await getAccessTokenSilently();
-    
-    // Return a new instance with the token
-    return axios.create({
-      baseURL: import.meta.env.VITE_API_URL || '/api',
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-  } catch (error) {
-    console.error('Failed to get access token', error);
-    // Return regular API instance if token retrieval fails
-    return API;
+// Add a request interceptor to include the authentication token in the headers
+// We'll only use this as a fallback; our service functions will explicitly set the token
+API.interceptors.request.use((config) => {
+  // Only add the token if it's not already set in the request
+  if (!config.headers.Authorization) {
+    const token = localStorage.getItem("auth0Token");
+    if (token) {
+      // console.log("Adding token to request headers from localStorage");
+      config.headers.Authorization = `Bearer ${token}`;
+    } else {
+      console.log("No token available for request");
+    }
   }
-};
+  return config;
+});
 
 // API services for recipes
 export const RecipeService = {
-  // Public endpoints - no auth needed
   getAllRecipes: () => API.get("/recipes"),
   getRecipeById: (id) => API.get(`/recipes/${id}`),
   searchRecipes: (query) => API.get(`/recipes/search?query=${query}`),
+  createRecipe: async (formData, getTokenFn) => {
+    if (getTokenFn) {
+      const token = await getTokenFn();
+      return API.post("/recipes", formData, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    }
+    return API.post("/recipes", formData);
+  },
+  updateRecipe: async (id, formData, getTokenFn) => {
+    if (getTokenFn) {
+      const token = await getTokenFn();
+      return API.put(`/recipes/${id}`, formData, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    }
+    return API.put(`/recipes/${id}`, formData);
+  },
+  deleteRecipe: async (id, getTokenFn) => {
+    if (getTokenFn) {
+      const token = await getTokenFn();
+      return API.delete(`/recipes/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    }
+    return API.delete(`/recipes/${id}`);
+  },
   getRecipesByUser: (userId) => API.get(`/recipes/user/${userId}`),
-  
-  // Protected endpoints - need auth token
-  createRecipe: async (formData, getToken) => {
-    const token = await getToken();
-    return axios.post(
-      `${API.defaults.baseURL}/recipes`, 
-      formData, 
-      { headers: { Authorization: `Bearer ${token}` }}
-    );
-  },
-  updateRecipe: async (id, formData, getToken) => {
-    const token = await getToken();
-    return axios.put(
-      `${API.defaults.baseURL}/recipes/${id}`, 
-      formData, 
-      { headers: { Authorization: `Bearer ${token}` }}
-    );
-  },
-  deleteRecipe: async (id, getToken) => {
-    const token = await getToken();
-    return axios.delete(
-      `${API.defaults.baseURL}/recipes/${id}`, 
-      { headers: { Authorization: `Bearer ${token}` }}
-    );
-  },
 };
 
-// API services for users
+// Update user service to match new Auth0 flow
 export const UserService = {
-  // All user endpoints need auth
-  getProfile: async (getToken) => {
-    const token = await getToken();
-    return axios.get(
-      `${API.defaults.baseURL}/users/profile`, 
-      { headers: { Authorization: `Bearer ${token}` }}
-    );
+  // Replace login and register with single method to register/update user in our backend
+  registerOrUpdateUser: async (userData, getTokenFn) => {
+    if (getTokenFn) {
+      const token = await getTokenFn();
+      return API.post("/users/profile", userData, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    }
+    return API.post("/users/profile", userData);
   },
-  updateProfile: async (userData, getToken) => {
-    const token = await getToken();
-    return axios.put(
-      `${API.defaults.baseURL}/users/profile`, 
-      userData, 
-      { headers: { Authorization: `Bearer ${token}` }}
-    );
+  getProfile: async (getTokenFn) => {
+    if (getTokenFn) {
+      const token = await getTokenFn();
+      return API.get("/users/profile", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    }
+    return API.get("/users/profile");
   },
-  saveRecipe: async (recipeId, getToken) => {
-    const token = await getToken();
-    return axios.post(
-      `${API.defaults.baseURL}/users/save-recipe`, 
-      { recipeId }, 
-      { headers: { Authorization: `Bearer ${token}` }}
-    );
+  updateProfile: async (userData, getTokenFn) => {
+    if (getTokenFn) {
+      const token = await getTokenFn();
+      return API.put("/users/profile", userData, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    }
+    return API.put("/users/profile", userData);
   },
-  unsaveRecipe: async (recipeId, getToken) => {
-    const token = await getToken();
-    return axios.delete(
-      `${API.defaults.baseURL}/users/unsave-recipe/${recipeId}`, 
-      { headers: { Authorization: `Bearer ${token}` }}
-    );
+  saveRecipe: async (recipeId, getTokenFn) => {
+    if (getTokenFn) {
+      const token = await getTokenFn();
+      return API.post("/users/save-recipe", { recipeId }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    }
+    return API.post("/users/save-recipe", { recipeId });
   },
-  getSavedRecipes: async (getToken) => {
-    const token = await getToken();
-    return axios.get(
-      `${API.defaults.baseURL}/users/saved-recipes`, 
-      { headers: { Authorization: `Bearer ${token}` }}
-    );
+  unsaveRecipe: async (recipeId, getTokenFn) => {
+    if (getTokenFn) {
+      const token = await getTokenFn();
+      return API.delete(`/users/unsave-recipe/${recipeId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    }
+    return API.delete(`/users/unsave-recipe/${recipeId}`);
+  },
+  getSavedRecipes: async (getTokenFn) => {
+    if (getTokenFn) {
+      const token = await getTokenFn();
+      return API.get("/users/saved-recipes", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    }
+    return API.get("/users/saved-recipes");
   },
 };
 
 // API services for reviews
 export const ReviewService = {
-  // Public endpoints - no auth needed
   getReviewsByRecipe: (recipeId) => API.get(`/reviews/recipe/${recipeId}`),
-  getReviewsByUser: (userId) => API.get(`/reviews/user/${userId}`),
-  getReviewById: (id) => API.get(`/reviews/${id}`),
-  
-  // Protected endpoints - need auth
-  createReview: async (reviewData, getToken) => {
-    const token = await getToken();
-    return axios.post(
-      `${API.defaults.baseURL}/reviews`, 
-      reviewData, 
-      { headers: { Authorization: `Bearer ${token}` }}
-    );
+  createReview: async (reviewData, getTokenFn) => {
+    if (getTokenFn) {
+      const token = await getTokenFn();
+      return API.post("/reviews", reviewData, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    }
+    return API.post("/reviews", reviewData);
   },
-  updateReview: async (id, reviewData, getToken) => {
-    const token = await getToken();
-    return axios.put(
-      `${API.defaults.baseURL}/reviews/${id}`, 
-      reviewData, 
-      { headers: { Authorization: `Bearer ${token}` }}
-    );
+  updateReview: async (id, reviewData, getTokenFn) => {
+    if (getTokenFn) {
+      const token = await getTokenFn();
+      return API.put(`/reviews/${id}`, reviewData, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    }
+    return API.put(`/reviews/${id}`, reviewData);
   },
-  deleteReview: async (id, getToken) => {
-    const token = await getToken();
-    return axios.delete(
-      `${API.defaults.baseURL}/reviews/${id}`, 
-      { headers: { Authorization: `Bearer ${token}` }}
-    );
+  deleteReview: async (id, getTokenFn) => {
+    if (getTokenFn) {
+      const token = await getTokenFn();
+      return API.delete(`/reviews/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    }
+    return API.delete(`/reviews/${id}`);
   },
 };
 

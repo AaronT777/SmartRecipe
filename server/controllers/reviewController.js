@@ -2,6 +2,7 @@
 
 const Review = require("../models/Review");
 const Recipe = require("../models/Recipe");
+const User = require("../models/User");
 
 // Create a review
 exports.createReview = async (req, res) => {
@@ -10,14 +11,19 @@ exports.createReview = async (req, res) => {
 
     // Check if recipe exists
     const recipe = await Recipe.findById(recipeId);
-
     if (!recipe) {
       return res.status(404).json({ msg: "Recipe not found" });
     }
 
-    // Create new review
+    // Find user by Auth0 ID
+    const user = await User.findOne({ auth0Id: req.user.id });
+    if (!user) {
+      return res.status(404).json({ msg: "User not found in database" });
+    }
+
+    // Create new review with the local database user ID
     const newReview = new Review({
-      userId: req.user._id,
+      userId: user._id, // Use the MongoDB ObjectId from our database
       recipeId,
       comment,
     });
@@ -95,8 +101,14 @@ exports.updateReview = async (req, res) => {
       return res.status(404).json({ msg: "Review not found" });
     }
 
+    // Find user by Auth0 ID
+    const user = await User.findOne({ auth0Id: req.user.id });
+    if (!user) {
+      return res.status(404).json({ msg: "User not found in database" });
+    }
+
     // Check user owns the review
-    if (review.userId.toString() !== req.user._id.toString()) {
+    if (review.userId.toString() !== user._id.toString()) {
       return res.status(401).json({ msg: "User not authorized" });
     }
 
@@ -133,8 +145,14 @@ exports.deleteReview = async (req, res) => {
       return res.status(404).json({ msg: "Review not found" });
     }
 
+    // Find user by Auth0 ID
+    const user = await User.findOne({ auth0Id: req.user.id });
+    if (!user) {
+      return res.status(404).json({ msg: "User not found in database" });
+    }
+
     // Check user owns the review
-    if (review.userId.toString() !== req.user._id.toString()) {
+    if (review.userId.toString() !== user._id.toString()) {
       return res.status(401).json({ msg: "User not authorized" });
     }
 
