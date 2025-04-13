@@ -10,6 +10,7 @@ const Search = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [sortOrder, setSortOrder] = useState('relevance');
+  const [searchPerformed, setSearchPerformed] = useState(false);
   
   // Get query parameters from URL
   const location = useLocation();
@@ -23,9 +24,11 @@ const Search = () => {
       const query = ingredientsParam || searchParam;
       setSearchQuery(query.replace(',', ', '));
       fetchRecipes(query);
+      setSearchPerformed(true); // Mark that a search was performed
     } else {
       // Otherwise, fetch some recent/popular recipes
       fetchPopularRecipes();
+      setSearchPerformed(false); // No search performed
     }
   }, [ingredientsParam, searchParam]);
   
@@ -61,13 +64,26 @@ const Search = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
+      setSearchPerformed(true); // Mark that a search was performed
       fetchRecipes(searchQuery);
       
       // Update URL with search query
       const searchParams = new URLSearchParams(location.search);
       searchParams.set('query', searchQuery);
       window.history.pushState({}, '', `${location.pathname}?${searchParams.toString()}`);
+    } else {
+      // If search query is empty, fetch all recipes
+      setSearchPerformed(false); // Reset search performed state
+      fetchPopularRecipes();
+      
+      // Clear search query from URL
+      window.history.pushState({}, '', location.pathname);
     }
+  };
+
+  // Add a function to clear the search input
+  const handleClearSearch = () => {
+    setSearchQuery('');
   };
   
   const handleSortChange = (e) => {
@@ -103,6 +119,16 @@ const Search = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
+            {/* Add clear button that appears only when there is text */}
+            {searchQuery && (
+              <button 
+                className="btn btn-outline-success clear-search-btn" 
+                type="button"
+                onClick={handleClearSearch}
+              >
+                <i className="bi bi-x fs-5"></i>
+              </button>
+            )}
             <button 
               className="btn btn-success" 
               type="submit"
@@ -117,8 +143,8 @@ const Search = () => {
       <div className="results-section">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h2 className="results-title">
-            {recipes.length > 0 ? `${recipes.length} Recipe Results` : 'Popular Recipes'}
-            {searchQuery && ` for "${searchQuery}"`}
+            {/* Always show recipe count, add search term if a search was performed */}
+            {`${recipes.length} Recipe Results${searchPerformed && searchQuery ? ` for "${searchQuery}"` : ''}`}
           </h2>
           
           <div className="sort-control">
