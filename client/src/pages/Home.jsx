@@ -209,7 +209,7 @@ export default function Home({ isLoggedIn }) {
                     }}
                   />
                   <div className="card-body">
-                    <h5 className="card-title">{restaurant.name}</h5>
+                    <p className="card-title">{restaurant.name}</p>
                     <div className="restaurant-meta">
                       <span>{restaurant.distance} min</span>
                       <span>{restaurant.price}</span>
