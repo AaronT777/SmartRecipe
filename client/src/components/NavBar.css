@@ -7,14 +7,16 @@
 .logo-text {
   color: #4caf50;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .navbar-nav .nav-link {
-  color: #333;
-  font-weight: 500;
+  color: #4caf50;
+  font-weight: 600;
+  font-size: 1.1rem;
   margin: 0 10px;
+  transition: color 0.2s;
 }
 
 .navbar-nav .nav-link:hover {
@@ -30,12 +32,63 @@
   color: #4caf50;
 }
 
+.navbar-toggler {
+  border-color: #4caf50;
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25);
+}
+
 @media (max-width: 991px) {
   .navbar-collapse {
     margin-top: 15px;
   }
-
+  
+  /* 保证所有导航项右对齐 */
+  .navbar-nav {
+    text-align: right;
+  }
+  
   .navbar-nav .nav-item {
-    margin: 5px 0;
+    text-align: right;
+    width: 100%;
+  }
+  
+  /* 修复用户容器结构 */
+  .navbar-nav .nav-item:last-child {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* 重要：修改d-flex容器的行为 */
+  .navbar-nav .nav-item .d-flex {
+    display: flex;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    width: 100%;
+  }
+  
+  /* 确保用户名在小屏幕上显示 */
+  .navbar-nav .nav-item .d-flex .ms-1.d-none {
+    display: inline !important;
+  }
+  
+  /* 修复登出按钮 */
+  .navbar-nav .nav-item .d-flex .btn.btn-link.nav-link {
+    width: 100%;
+    text-align: right;
+    margin-top: 8px;
+    border-top: 1px solid #eee;
+    padding-top: 8px;
+  }
+  
+  /* 确保用户图标和名称一行 */
+  .navbar-nav .nav-item .d-flex .nav-link {
+    width: 100%;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 }
