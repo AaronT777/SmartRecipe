@@ -8,7 +8,7 @@ export default function NavBar() {
   const { isAuthenticated, isLoading, user, login, logout } = useAuth();
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light">
+    <nav className="navbar navbar-expand-xl navbar-light">
       <div className="container">
         <Link className="navbar-brand" to="/">
           <span className="logo-text">🍴 SmartRecipe</span>

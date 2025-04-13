@@ -34,6 +34,9 @@ const RecipeSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Review'
   }],
+  image: {
+    type: String
+  },
   createdAt: {
     type: Date,
     default: Date.now
