@@ -1,8 +1,8 @@
-// server/controllers/recipeController.js
-
 const Recipe = require("../models/Recipe");
 const User = require("../models/User");
 const path = require("path");
+const { cloudinary, extractPublicId } = require('../config/cloudinary');
+const fs = require('fs');
 
 // Get all recipes
 exports.getAllRecipes = async (req, res) => {
@@ -67,6 +67,9 @@ exports.createRecipe = async (req, res) => {
       return res.status(404).json({ msg: "User not found in database" });
     }
 
+    // Use Cloudinary URL
+    const imageUrl = req.file ? req.file.path : null;
+    
     // Create new recipe object
     const newRecipe = new Recipe({
       recipeName,
@@ -75,8 +78,8 @@ exports.createRecipe = async (req, res) => {
       calories,
       ingredients: JSON.parse(ingredients),
       instructions,
-      userId: user._id, // Use MongoDB ObjectId from our database
-      image: req.file ? `/uploads/recipes/${req.file.filename}` : null,
+      userId: user._id,
+      image: imageUrl
     });
 
     const recipe = await newRecipe.save();
@@ -124,7 +127,25 @@ exports.updateRecipe = async (req, res) => {
     if (calories) recipeFields.calories = calories;
     if (ingredients) recipeFields.ingredients = JSON.parse(ingredients);
     if (instructions) recipeFields.instructions = instructions;
-    if (req.file) recipeFields.image = `/uploads/recipes/${req.file.filename}`;
+
+    // Deal with image upload
+    if (req.file) {
+      try {
+        console.log("Cloudinary URL:", req.file.path);
+        
+        // When using CloudinaryStorage, req.file.path is already the Cloudinary URL
+        recipeFields.image = req.file.path;
+        
+        // If the recipe already has an image and it's different from the new one, delete the old image
+        if (recipe.image && recipe.image !== req.file.path) {
+          console.log("Deleting old image:", recipe.image);
+          await deleteCloudinaryImage(recipe.image);
+        }
+      } catch (err) {
+        console.error("Error handling image upload:", err);
+        return res.status(500).json({ msg: "Error uploading image to cloud storage" });
+      }
+    }
 
     // Update recipe
     recipe = await Recipe.findByIdAndUpdate(
@@ -135,12 +156,7 @@ exports.updateRecipe = async (req, res) => {
 
     res.json(recipe);
   } catch (err) {
-    console.error(err.message);
-
-    if (err.kind === "ObjectId") {
-      return res.status(404).json({ msg: "Recipe not found" });
-    }
-
+    console.error("Update recipe error:", err);
     res.status(500).send("Server Error");
   }
 };
@@ -165,6 +181,11 @@ exports.deleteRecipe = async (req, res) => {
       return res.status(401).json({ msg: "User not authorized" });
     }
 
+    // Delete the recipe image from Cloudinary
+    if (recipe.image) {
+      await deleteCloudinaryImage(recipe.image);
+    }
+
     await Recipe.findByIdAndRemove(req.params.id);
     res.json({ msg: "Recipe removed" });
   } catch (err) {
@@ -175,6 +196,22 @@ exports.deleteRecipe = async (req, res) => {
     }
 
     res.status(500).send("Server Error");
+  }
+};
+
+const deleteCloudinaryImage = async (imageUrl) => {
+  try {
+    const publicId = extractPublicId(imageUrl);
+    if (publicId) {
+      console.log("Deleting Cloudinary image with public ID:", publicId);
+      const result = await cloudinary.uploader.destroy(publicId);
+      console.log("Cloudinary delete result:", result);
+      return result;
+    } else {
+      console.log("Could not extract public ID from URL:", imageUrl);
+    }
+  } catch (err) {
+    console.error("Error deleting image from Cloudinary:", err);
   }
 };
 
