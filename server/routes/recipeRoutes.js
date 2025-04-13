@@ -3,8 +3,9 @@ const express = require("express");
 const router = express.Router();
 const recipeController = require("../controllers/recipeController");
 const auth = require('../middleware/auth'); // Use new auth middleware
-const multer = require("multer");
-const path = require("path");
+// const multer = require("multer");
+// const path = require("path");
+const { upload } = require('../config/cloudinary');
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({

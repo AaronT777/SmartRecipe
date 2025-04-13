@@ -75,8 +75,9 @@ exports.createRecipe = async (req, res) => {
       calories,
       ingredients: JSON.parse(ingredients),
       instructions,
-      userId: user._id, // Use MongoDB ObjectId from our database
-      image: req.file ? `/uploads/recipes/${req.file.filename}` : null,
+      userId: user._id,
+      // Use the URL provided by Cloudinary
+      image: req.file ? req.file.path : null,
     });
 
     const recipe = await newRecipe.save();
@@ -124,7 +125,8 @@ exports.updateRecipe = async (req, res) => {
     if (calories) recipeFields.calories = calories;
     if (ingredients) recipeFields.ingredients = JSON.parse(ingredients);
     if (instructions) recipeFields.instructions = instructions;
-    if (req.file) recipeFields.image = `/uploads/recipes/${req.file.filename}`;
+    // Use the URL provided by Cloudinary
+    if (req.file) recipeFields.image = req.file.path;
 
     // Update recipe
     recipe = await Recipe.findByIdAndUpdate(
