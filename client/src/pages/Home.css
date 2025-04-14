@@ -4,6 +4,16 @@
   padding: 20px;
 }
 
+.kitchen-section h1 {
+  font-family: "Pacifico", cursive;
+  color: #058109;
+}
+
+.kitchen-section p {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
 .kitchen-section {
   background-color: #f9f9f9;
   border-radius: 8px;
@@ -90,7 +100,7 @@
   text-overflow: ellipsis;
   height: 1.5rem;
   margin-bottom: 10px;
-  font-weight: 600;
+  font-size: 1.2rem;
 }
 
 .restaurant-meta {

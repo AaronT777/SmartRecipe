@@ -42,21 +42,45 @@
 }
 
 .user-icon {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #4caf50;
   transition: all 0.3s ease;
 }
 
-.navbar-nav .nav-link:hover .user-icon {
-  color: #ffffff;
+.nav-link.active .user-icon,
+.nav-link.active .fa-user {
+  color: #333333 !important;
+}
+
+.navbar-nav .nav-link:hover .user-icon,
+.navbar-nav .nav-link.active:hover .user-icon,
+.navbar-nav .nav-link:hover .fa-user,
+.navbar-nav .nav-link.active:hover .fa-user {
+  color: #ffffff !important;
 }
 
 .navbar-toggler {
-  border-color: #4caf50;
+  border: 3px solid #4caf50 !important;
+  background-color: white;
+  padding: 0.25rem 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.navbar-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%234caf50' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+  transition: background-image 0.3s ease;
+}
+
+.navbar-toggler:hover {
+  background-color: #4caf50;
+}
+
+.navbar-toggler:hover .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
 }
 
 .navbar-toggler:focus {
-  box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25);
+  box-shadow: 0 0 0 1px rgba(76, 175, 80, 0.25);
 }
 
 @media (max-width: 1199px) {

@@ -4,7 +4,7 @@ import { useAuth } from "../hooks/useAuth";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./NavBar.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faSignOutAlt, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faSignOutAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function NavBar() {
   const { isAuthenticated, isLoading, user, login, logout } = useAuth();
@@ -85,7 +85,7 @@ export default function NavBar() {
                 </div>
               ) : (
                 <button className="btn btn-link nav-link" onClick={login}>
-                  <FontAwesomeIcon icon={faSignInAlt} className="user-icon" /> Login
+                  <FontAwesomeIcon icon={faUserPlus} className="user-icon" /> Login
                 </button>
               )}
             </li>
