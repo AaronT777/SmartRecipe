@@ -59,10 +59,11 @@ body {
 /* Footer styles */
 .app-footer {
   background-color: #f1f1f1;
-  padding: 1.5rem 0;
+  padding: 1rem;
   text-align: center;
   margin-top: auto;
   color: #666;
+  font-size: 1rem;
 }
 
 /* Spinner/Loading */

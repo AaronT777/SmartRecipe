@@ -75,7 +75,7 @@ function App() {
       
       <footer className="app-footer">
         <div className="container">
-          <p>&copy; {new Date().getFullYear()} SmartRecipe - Created by Tianze Yin & Xinghang Tong</p>
+          <p>&copy; {new Date().getFullYear()} SmartRecipe - Created by Xinghang Tong & Tianze Yin</p>
         </div>
       </footer>
     </div>
