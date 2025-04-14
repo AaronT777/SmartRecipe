@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./NavBar.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faSignOutAlt, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
 export default function NavBar() {
   const { isAuthenticated, isLoading, user, login, logout } = useAuth();
@@ -70,7 +72,7 @@ export default function NavBar() {
                           height="24"
                         />
                       ) : (
-                        "👤"
+                        <FontAwesomeIcon icon={faUser} />
                       )}
                     </span>
                     <span className="ms-1 d-none d-lg-inline">
@@ -78,12 +80,12 @@ export default function NavBar() {
                     </span>
                   </Link>
                   <button className="btn btn-link nav-link" onClick={logout}>
-                    Logout
+                    <FontAwesomeIcon icon={faSignOutAlt} className="user-icon" /> Logout
                   </button>
                 </div>
               ) : (
                 <button className="btn btn-link nav-link" onClick={login}>
-                  <span className="user-icon">👤</span> Login
+                  <FontAwesomeIcon icon={faSignInAlt} className="user-icon" /> Login
                 </button>
               )}
             </li>

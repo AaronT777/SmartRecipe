@@ -21,8 +21,8 @@
 
 .navbar-brand {
   display: flex;
-  align-items: center; /* 垂直居中对齐 */
-  gap: 8px; /* 图标和文字之间的间距 */
+  align-items: center;
+  gap: 8px;
 }
 
 .navbar-nav .nav-link {
@@ -30,20 +30,25 @@
   font-weight: 600;
   font-size: 1.1rem;
   margin: 0 10px;
-  transition: color 0.2s;
+  transition: all 0.3s ease;
+  padding: 8px 15px;
+  border-radius: 20px;
 }
 
 .navbar-nav .nav-link:hover {
-  color: #4caf50;
+  color: #ffffff;
+  background-color: #4caf50;
+  border-radius: 20px;
 }
 
 .user-icon {
   font-size: 1.2rem;
-  color: #666;
+  color: #4caf50;
+  transition: all 0.3s ease;
 }
 
-.user-icon:hover {
-  color: #4caf50;
+.navbar-nav .nav-link:hover .user-icon {
+  color: #ffffff;
 }
 
 .navbar-toggler {
