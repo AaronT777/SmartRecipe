@@ -3,8 +3,12 @@ import { NavLink, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./NavBar.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faSignOutAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUser,
+  faSignOutAlt,
+  faUserPlus,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function NavBar() {
   const { isAuthenticated, isLoading, user, login, logout } = useAuth();
@@ -13,7 +17,11 @@ export default function NavBar() {
     <nav className="navbar navbar-expand-xl navbar-light">
       <div className="container">
         <Link className="navbar-brand" to="/">
-          <img className="navbar-logo" src="/images/logo.png" alt="SmartRecipe Logo"  />
+          <img
+            className="navbar-logo"
+            src="/images/logo.png"
+            alt="SmartRecipe Logo"
+          />
           <span className="logo-text">SmartRecipe</span>
         </Link>
 
@@ -80,13 +88,20 @@ export default function NavBar() {
                     </span>
                   </NavLink>
                   <button className="btn btn-link nav-link" onClick={logout}>
-                    <FontAwesomeIcon icon={faSignOutAlt} className="user-icon" /> Logout
+                    <FontAwesomeIcon
+                      icon={faSignOutAlt}
+                      className="user-icon"
+                    />{" "}
+                    Logout
                   </button>
                 </div>
               ) : (
-                <button className="btn btn-link nav-link" onClick={login}>
-                  <FontAwesomeIcon icon={faUserPlus} className="user-icon" /> Login
-                </button>
+                <div className="d-flex align-items-center">
+                  <button className="btn btn-link nav-link" onClick={login}>
+                    <FontAwesomeIcon icon={faUserPlus} className="user-icon" />{" "}
+                    Login
+                  </button>
+                </div>
               )}
             </li>
           </ul>
