@@ -1,8 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./NavBar.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faSignOutAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function NavBar() {
   const { isAuthenticated, isLoading, user, login, logout } = useAuth();
@@ -33,19 +35,19 @@ export default function NavBar() {
         >
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link className="nav-link" to="/">
+              <NavLink className="nav-link" to="/" end>
                 Home
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/build">
+              <NavLink className="nav-link" to="/build">
                 Build Your Own
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/search">
+              <NavLink className="nav-link" to="/search">
                 Search
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
               {isLoading ? (
@@ -59,7 +61,7 @@ export default function NavBar() {
                 </div>
               ) : isAuthenticated ? (
                 <div className="d-flex align-items-center">
-                  <Link className="nav-link" to="/profile">
+                  <NavLink className="nav-link" to="/profile">
                     <span className="user-icon">
                       {user?.picture ? (
                         <img
@@ -70,20 +72,20 @@ export default function NavBar() {
                           height="24"
                         />
                       ) : (
-                        "👤"
+                        <FontAwesomeIcon icon={faUser} />
                       )}
                     </span>
                     <span className="ms-1 d-none d-lg-inline">
                       {user?.username}
                     </span>
-                  </Link>
+                  </NavLink>
                   <button className="btn btn-link nav-link" onClick={logout}>
-                    Logout
+                    <FontAwesomeIcon icon={faSignOutAlt} className="user-icon" /> Logout
                   </button>
                 </div>
               ) : (
                 <button className="btn btn-link nav-link" onClick={login}>
-                  <span className="user-icon">👤</span> Login
+                  <FontAwesomeIcon icon={faUserPlus} className="user-icon" /> Login
                 </button>
               )}
             </li>

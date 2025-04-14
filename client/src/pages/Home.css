@@ -4,6 +4,16 @@
   padding: 20px;
 }
 
+.kitchen-section h1 {
+  font-family: "Pacifico", cursive;
+  color: #058109;
+}
+
+.kitchen-section p {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
 .kitchen-section {
   background-color: #f9f9f9;
   border-radius: 8px;
@@ -14,6 +24,11 @@
 .search-container {
   max-width: 700px;
   margin: 0 auto;
+}
+
+.search-container .btn-success {
+  font-weight: bold;
+  font-size: 1rem;
 }
 
 .ingredients-tags {
@@ -79,6 +94,32 @@
   object-fit: cover;
 }
 
+.restaurant-card .card-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 1.5rem;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.restaurant-meta {
+  height: 1.5rem;
+}
+
+.restaurant-card {
+  height: 100%;
+}
+
+.restaurant-card .card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.restaurant-card .btn {
+  margin-top: auto;
+}
+
 .recipe-meta,
 .restaurant-meta {
   display: flex;
@@ -86,6 +127,11 @@
   margin-bottom: 15px;
   color: #666;
   font-size: 14px;
+}
+
+.card-body .btn-success {
+  font-weight: bold;
+  font-size: 1rem;
 }
 
 .carousel-controls button {
@@ -116,11 +162,19 @@
   background-color: #4caf50;
   color: white;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border-color: #4caf50;
 }
 
 .more-options-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.more-options-btn .spinner-border-sm {
+  width: 1em;
+  height: 1em;
+  border-width: 0.15em;
+  vertical-align: middle;
 }
 
 @media (max-width: 768px) {
@@ -131,5 +185,48 @@
   .col-md-4,
   .col-md-3 {
     margin-bottom: 20px;
+  }
+
+  .restaurants-section .d-flex.justify-content-between.align-items-center {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 15px; /* 添加垂直间距 */
+  }
+  
+  /* 让标题和按钮都占满宽度并居中 */
+  .restaurants-section .section-title {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .restaurants-section .carousel-controls {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* 修改标题装饰线的样式，使其居中显示 */
+  .restaurants-section .section-title:after {
+    left: 50%; /* 将线的左边缘设置在标题中心 */
+    transform: translateX(-50%); /* 向左移动线宽度的一半，实现真正居中 */
+    width: 40px; /* 可能略微调整线的宽度 */
+  }
+  
+  /* 调整按钮样式使其在小屏幕上更美观 */
+  .more-options-btn {
+    width: 100%;
+    max-width: 250px;
+  }
+}
+
+/* 对于更小的屏幕，进一步优化 */
+@media (max-width: 576px) {
+  .section-title {
+    font-size: 1.5rem;
+  }
+  
+  .more-options-btn {
+    font-size: 14px;
+    padding: 6px 15px;
   }
 }

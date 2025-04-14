@@ -60,7 +60,8 @@
 .edit-btn {
   margin-left: 0;
   color: #4caf50;
-  border-color: #e0e0e0;
+  border: 2px solid #e0e0e0;
+  font-weight: bold;
 }
 
 .save-btn:hover,
@@ -77,6 +78,13 @@
 .unsave-btn:hover {
   background-color: #dc3545;
   color: #fff;
+}
+
+.card-actions .save-btn .spinner-border-sm {
+  width: 1em;
+  height: 1em;
+  border-width: 0.15em;
+  vertical-align: middle;
 }
 
 @media (max-width: 768px) {

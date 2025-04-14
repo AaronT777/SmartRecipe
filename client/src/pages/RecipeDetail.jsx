@@ -192,7 +192,7 @@ const RecipeDetail = () => {
       </div>
 
       <div className="action-buttons">
-        <button className="btn btn-light" onClick={() => window.print()}>
+        <button className="btn btn-print" onClick={() => window.print()}>
           <i className="bi bi-printer"></i> Print
         </button>
 
@@ -225,7 +225,7 @@ const RecipeDetail = () => {
 
         {isCreator && (
           <>
-            <Link to={`/recipe/edit/${id}`} className="btn btn-primary ms-2">
+            <Link to={`/recipe/edit/${id}`} className="btn btn-primary btn-edit ms-2">
               <i className="bi bi-pencil"></i> Edit
             </Link>
             <button
@@ -244,7 +244,7 @@ const RecipeDetail = () => {
                 </>
               ) : (
                 <>
-                  <i className="bi bi-trash"></i> Delete
+                  <i className="bi bi-trash"></i> <span className="btn-delete">Delete</span>
                 </>
               )}
             </button>
@@ -274,7 +274,7 @@ const RecipeDetail = () => {
             <h2>Instructions</h2>
             <ol className="instructions-list">
               {recipe.instructions.split("\n").map((step, index) => (
-                <li key={index}>{step.replace(/^\d+\.\s*/, "")}</li>
+                <li key={index} className="instructions-item">{step.replace(/^\d+\.\s*/, "")}</li>
               ))}
             </ol>
           </div>

@@ -53,7 +53,7 @@ const openaiService = {
       const imageResponse = await openai.images.generate({
         prompt: recipeData.imagePrompt,
         n: 1,
-        size: "1024x1024",
+        size: "512x512",
         response_format: "b64_json"
       });
 

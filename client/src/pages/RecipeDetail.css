@@ -32,6 +32,33 @@
   margin-bottom: 20px;
 }
 
+.btn-print {
+  border: 1px solid #dee2e6;
+  background-color: rgb(237, 237, 237);
+  color: #3c5a78;
+  transition: all 0.2s ease;
+}
+
+.btn-print:hover {
+  background-color: #f8f9fa;
+  border-color: #c1c9d0;
+}
+
+.btn-print,
+.btn-edit, 
+.btn-delete,
+.btn-danger {
+  font-weight: 700 !important;
+}
+
+.btn-danger .spinner-border-sm {
+  width: 1em;
+  height: 1em;
+  border-width: 0.2em;
+  color: rgb(159, 145, 145);
+  vertical-align: middle;
+}
+
 .recipe-image-container {
   margin-bottom: 30px;
   border-radius: 8px;
@@ -65,7 +92,14 @@ h2:after {
 }
 
 .description-section {
-  margin-bottom: 30px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 15px;
+  padding-bottom: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  
 }
 
 .description-section p {
@@ -86,7 +120,32 @@ h2:after {
 .ingredients-section {
   background-color: #f9f9f9;
   border-radius: 8px;
-  padding: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 15px;
+  padding-bottom: 1px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.instructions-section {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 15px;
+  padding-bottom: 5px;
+  margin-top: 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.instructions-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  color: #444;
+}
+
+.instructions-item:last-child {
+  border-bottom: none;
 }
 
 .ingredients-list {
