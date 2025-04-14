@@ -60,9 +60,8 @@
 .section-title {
   color: #333;
   margin-bottom: 20px;
-  font-weight: 600;
   position: relative;
-  padding-bottom: 10px;
+  padding-bottom: 15px;
 }
 
 .section-title:after {
