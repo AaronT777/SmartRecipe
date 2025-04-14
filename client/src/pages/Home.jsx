@@ -5,7 +5,6 @@ import "./Home.css";
 
 export default function Home({ isLoggedIn }) {
   const navigate = useNavigate();
-  const [ingredients, setIngredients] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [restaurants, setRestaurants] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -84,30 +83,16 @@ export default function Home({ isLoggedIn }) {
     }
   };
 
-  const handleAddIngredient = () => {
-    if (inputValue.trim() && !ingredients.includes(inputValue.trim())) {
-      setIngredients([...ingredients, inputValue.trim()]);
-      setInputValue("");
-    }
-  };
-
-  const handleRemoveIngredient = (ingredient) => {
-    setIngredients(ingredients.filter((item) => item !== ingredient));
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleAddIngredient();
-    }
-  };
-
   const handleFindRecipes = () => {
-    if (ingredients.length === 0) return;
+    if (!inputValue.trim()) return;
 
     setIsLoading(true);
 
-    // Navigate to search page with ingredients as query parameters
-    navigate(`/search?ingredients=${ingredients.join(",")}`);
+    // Get ingredients as an array by splitting the comma-separated input
+    const ingredients = inputValue.split(',').map(item => item.trim()).filter(Boolean);
+    
+    // Navigate to build page with ingredients as state
+    navigate('/build', { state: { ingredients } });
   };
 
   const handleRestaurantDetails = (restaurantUrl) => {
@@ -128,40 +113,17 @@ export default function Home({ isLoggedIn }) {
             <input
               type="text"
               className="form-control"
-              placeholder="Enter ingredients (e.g., chicken, rice, tomatoes)"
+              placeholder="Enter ingredients separated by commas (e.g., chicken, rice, tomatoes)"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={handleKeyPress}
+              onKeyDown={(e) => e.key === "Enter" && handleFindRecipes()}
             />
-            <button
-              className="btn btn-outline-success"
-              type="button"
-              onClick={handleAddIngredient}
-            >
-              +
-            </button>
           </div>
-
-          {ingredients.length > 0 && (
-            <div className="ingredients-tags mb-3">
-              {ingredients.map((ingredient, index) => (
-                <span key={index} className="ingredient-tag">
-                  {ingredient}
-                  <button
-                    className="remove-tag"
-                    onClick={() => handleRemoveIngredient(ingredient)}
-                  >
-                    ×
-                  </button>
-                </span>
-              ))}
-            </div>
-          )}
 
           <button
             className="btn btn-success w-100"
             onClick={handleFindRecipes}
-            disabled={ingredients.length === 0 || isLoading}
+            disabled={!inputValue.trim() || isLoading}
           >
             {isLoading ? "Finding Recipes..." : "Find Recipes"}
           </button>
