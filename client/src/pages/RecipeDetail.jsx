@@ -274,7 +274,7 @@ const RecipeDetail = () => {
             <h2>Instructions</h2>
             <ol className="instructions-list">
               {recipe.instructions.split("\n").map((step, index) => (
-                <li key={index}>{step.replace(/^\d+\.\s*/, "")}</li>
+                <li key={index} className="instructions-item">{step.replace(/^\d+\.\s*/, "")}</li>
               ))}
             </ol>
           </div>
