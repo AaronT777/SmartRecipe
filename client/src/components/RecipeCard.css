@@ -79,6 +79,13 @@
   color: #fff;
 }
 
+.card-actions .save-btn .spinner-border-sm {
+  width: 1em;
+  height: 1em;
+  border-width: 0.15em;
+  vertical-align: middle;
+}
+
 @media (max-width: 768px) {
   .recipe-card .card-img-top {
     height: 160px;

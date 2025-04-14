@@ -16,6 +16,11 @@
   margin: 0 auto;
 }
 
+.search-container .btn-success {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
 .ingredients-tags {
   display: flex;
   flex-wrap: wrap;
@@ -114,6 +119,11 @@
   font-size: 14px;
 }
 
+.card-body .btn-success {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
 .carousel-controls button {
   width: 30px;
   height: 30px;
@@ -147,6 +157,13 @@
 .more-options-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.more-options-btn .spinner-border-sm {
+  width: 1em;
+  height: 1em;
+  border-width: 0.15em;
+  vertical-align: middle;
 }
 
 @media (max-width: 768px) {
