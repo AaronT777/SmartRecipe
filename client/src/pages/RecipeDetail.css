@@ -32,6 +32,24 @@
   margin-bottom: 20px;
 }
 
+.btn-print {
+  border: 1px solid #dee2e6;
+  background-color: white;
+  color: #212529;
+  transition: all 0.2s ease;
+}
+
+.btn-print:hover {
+  background-color: #f8f9fa;
+  border-color: #c1c9d0;
+}
+
+.btn-print,
+.btn-edit, 
+.btn-delete {
+  font-weight: 700 !important;
+}
+
 .recipe-image-container {
   margin-bottom: 30px;
   border-radius: 8px;
