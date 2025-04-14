@@ -18,6 +18,12 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
+.form-label {
+  font-weight: 600;
+  color: #444;
+  font-size: 1.2rem;
+}
+
 .custom-file-upload {
   margin-bottom: 15px;
 }
@@ -102,6 +108,16 @@
   box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
 }
 
+::placeholder {
+  color: #969696 !important;
+}
+
+.input-group .btn-outline-danger {
+  color: #dc3545;
+  border: 2px solid #dc3545;
+  font-weight: bold;
+}
+
 .input-group-text {
   background-color: #f8f9fa;
   color: #495057;
@@ -109,7 +125,8 @@
 
 .btn-outline-success {
   color: #4caf50;
-  border-color: #4caf50;
+  border: 2px solid #4caf50;
+  font-weight: bold;
 }
 
 .btn-outline-success:hover {
@@ -121,6 +138,7 @@
 .btn-success {
   background-color: #4caf50;
   border-color: #4caf50;
+  font-weight: bold;
 }
 
 .btn-success:hover {

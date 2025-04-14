@@ -494,7 +494,7 @@ const AddRecipe = ({ isEditing }) => {
                 onClick={() => removeIngredientField(index)}
                 disabled={recipeData.ingredients.length === 1}
               >
-                ×
+                <span>&times;</span>
               </button>
             </div>
           ))}
@@ -530,7 +530,7 @@ const AddRecipe = ({ isEditing }) => {
                 onClick={() => removeInstructionField(index)}
                 disabled={recipeData.instructions.length === 1}
               >
-                ×
+                <span>&times;</span>
               </button>
             </div>
           ))}
