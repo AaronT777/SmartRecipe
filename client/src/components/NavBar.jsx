@@ -11,36 +11,49 @@ export default function NavBar() {
     <nav className="navbar navbar-expand-xl navbar-light">
       <div className="container">
         <Link className="navbar-brand" to="/">
-          <span className="logo-text">🍴 SmartRecipe</span>
+          <img className="navbar-logo" src="/images/logo.png" alt="SmartRecipe Logo"  />
+          <span className="logo-text">SmartRecipe</span>
         </Link>
-        
-        <button 
-          className="navbar-toggler" 
-          type="button" 
-          data-bs-toggle="collapse" 
-          data-bs-target="#navbarNav" 
-          aria-controls="navbarNav" 
-          aria-expanded="false" 
+
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        
-        <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+
+        <div
+          className="collapse navbar-collapse justify-content-end"
+          id="navbarNav"
+        >
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link className="nav-link" to="/">Home</Link>
+              <Link className="nav-link" to="/">
+                Home
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/build">Build Your Own</Link>
+              <Link className="nav-link" to="/build">
+                Build Your Own
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/search">Search</Link>
+              <Link className="nav-link" to="/search">
+                Search
+              </Link>
             </li>
             <li className="nav-item">
               {isLoading ? (
                 <div className="d-flex align-items-center nav-link">
-                  <div className="spinner-border spinner-border-sm" role="status">
+                  <div
+                    className="spinner-border spinner-border-sm"
+                    role="status"
+                  >
                     <span className="visually-hidden">Loading...</span>
                   </div>
                 </div>
@@ -49,23 +62,22 @@ export default function NavBar() {
                   <Link className="nav-link" to="/profile">
                     <span className="user-icon">
                       {user?.picture ? (
-                        <img 
-                          src={user.picture} 
-                          alt={user.username} 
-                          className="rounded-circle" 
-                          width="24" 
+                        <img
+                          src={user.picture}
+                          alt={user.username}
+                          className="rounded-circle"
+                          width="24"
                           height="24"
                         />
                       ) : (
-                        '👤'
+                        "👤"
                       )}
                     </span>
-                    <span className="ms-1 d-none d-lg-inline">{user?.username}</span>
+                    <span className="ms-1 d-none d-lg-inline">
+                      {user?.username}
+                    </span>
                   </Link>
-                  <button 
-                    className="btn btn-link nav-link" 
-                    onClick={logout}
-                  >
+                  <button className="btn btn-link nav-link" onClick={logout}>
                     Logout
                   </button>
                 </div>
@@ -80,4 +92,4 @@ export default function NavBar() {
       </div>
     </nav>
   );
-};
+}
