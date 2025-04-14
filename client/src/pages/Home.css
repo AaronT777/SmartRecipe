@@ -79,6 +79,32 @@
   object-fit: cover;
 }
 
+.restaurant-card .card-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 1.5rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.restaurant-meta {
+  height: 1.5rem;
+}
+
+.restaurant-card {
+  height: 100%;
+}
+
+.restaurant-card .card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.restaurant-card .btn {
+  margin-top: auto;
+}
+
 .recipe-meta,
 .restaurant-meta {
   display: flex;
