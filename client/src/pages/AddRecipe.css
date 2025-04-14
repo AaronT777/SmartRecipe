@@ -128,6 +128,13 @@
   border-color: #3d8b40;
 }
 
+.btn-success .spinner-border-sm {
+  width: 1em;
+  height: 1em;
+  border-width: 0.2em;
+  vertical-align: middle;
+}
+
 @media (max-width: 768px) {
   .recipe-form {
     padding: 15px;
