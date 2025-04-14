@@ -12,29 +12,8 @@ exports.generateRecipe = async (req, res) => {
     // Generate recipe from OpenAI
     const recipeData = await openaiService.generateRecipe(ingredients);
 
-    // If there's image data, upload to Cloudinary
-    let imageUrl = null;
-    if (recipeData.image) {
-      try {
-        // Convert base64 to data URI
-        const dataUri = `data:image/jpeg;base64,${recipeData.image}`;
-        
-        // Upload to Cloudinary
-        const uploadResult = await cloudinary.uploader.upload(dataUri, {
-          folder: 'smartrecipe'
-        });
-        
-        imageUrl = uploadResult.secure_url;
-      } catch (err) {
-        console.error('Error uploading image to Cloudinary:', err);
-      }
-    }
-
     // Return the recipe data with image URL
-    res.json({
-      ...recipeData,
-      image: imageUrl
-    });
+    res.json(recipeData);
   } catch (err) {
     console.error('AI recipe generation error:', err.message);
     res.status(500).json({ message: 'Server Error: Failed to generate recipe' });

@@ -61,7 +61,9 @@ const AddRecipe = ({ isEditing }) => {
 
       // If there's an image URL, set the preview
       if (recipe.image) {
-        setImagePreview(recipe.image);
+        // 创建data URI用于预览
+        const imageDataUrl = `data:image/jpeg;base64,${recipe.image}`;
+        setImagePreview(imageDataUrl);
       }
 
       setGenerating(false);
@@ -249,18 +251,14 @@ const AddRecipe = ({ isEditing }) => {
       formData.append("instructions", recipeData.instructions.join("\n"));
 
       if (recipeData.image) {
+        // 用户上传的文件
         formData.append("image", recipeData.image);
-      } else if (imagePreview) {
-        if (imagePreview.startsWith('data:')) {
-          // Process data URI image
-          const response = await fetch(imagePreview);
-          const blob = await response.blob();
-          const file = new File([blob], "ai-generated-image.jpg", { type: 'image/jpeg' });
-          formData.append("image", file);
-        } else if (imagePreview.startsWith('http')) {
-          // Directly append the Cloudinary URL
-          formData.append("imageUrl", imagePreview);
-        }
+      } else if (imagePreview && imagePreview.startsWith('data:')) {
+        // 处理base64图片数据 - 这是AI生成的尚未上传的图片
+        const response = await fetch(imagePreview);
+        const blob = await response.blob();
+        const file = new File([blob], "ai-generated-image.jpg", { type: 'image/jpeg' });
+        formData.append("image", file);
       }
 
       let response;
