@@ -72,6 +72,10 @@ main {
   font-size: 1rem;
 }
 
+.app-footer .container p {
+  margin-bottom: 0 !important;
+} 
+
 /* Spinner/Loading */
 .spinner-border.text-success {
   color: #4caf50 !important;
