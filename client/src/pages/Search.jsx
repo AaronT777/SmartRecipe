@@ -126,7 +126,7 @@ const Search = () => {
                 type="button"
                 onClick={handleClearSearch}
               >
-                <i className="bi bi-x fs-5"></i>
+                <span>&times;</span>
               </button>
             )}
             <button 
