@@ -45,9 +45,12 @@ const AddRecipe = ({ isEditing }) => {
   const generateRecipeFromIngredients = async (ingredients) => {
     setGenerating(true);
     try {
-      const response = await OpenAIService.generateRecipe(ingredients, getToken);
+      const response = await OpenAIService.generateRecipe(
+        ingredients,
+        getToken
+      );
       const recipe = response.data;
-      
+
       // Set recipe data from AI response
       setRecipeData({
         recipeName: recipe.recipeName,
@@ -69,7 +72,9 @@ const AddRecipe = ({ isEditing }) => {
       setGenerating(false);
     } catch (err) {
       console.error("Error generating recipe:", err);
-      alert("Failed to generate recipe. Please try again or create one manually.");
+      alert(
+        "Failed to generate recipe. Please try again or create one manually."
+      );
       setGenerating(false);
     }
   };
@@ -253,11 +258,13 @@ const AddRecipe = ({ isEditing }) => {
       if (recipeData.image) {
         // 用户上传的文件
         formData.append("image", recipeData.image);
-      } else if (imagePreview && imagePreview.startsWith('data:')) {
+      } else if (imagePreview && imagePreview.startsWith("data:")) {
         // 处理base64图片数据 - 这是AI生成的尚未上传的图片
         const response = await fetch(imagePreview);
         const blob = await response.blob();
-        const file = new File([blob], "ai-generated-image.jpg", { type: 'image/jpeg' });
+        const file = new File([blob], "ai-generated-image.jpg", {
+          type: "image/jpeg",
+        });
         formData.append("image", file);
       }
 
@@ -291,7 +298,9 @@ const AddRecipe = ({ isEditing }) => {
         <div className="spinner-border text-success" role="status">
           <span className="visually-hidden">Generating AI recipe...</span>
         </div>
-        <p className="mt-2">Our AI chef is crafting a perfect recipe for you...</p>
+        <p className="mt-2">
+          Our AI chef is crafting a perfect recipe for you...
+        </p>
         <p className="text-muted">This may take a few moments</p>
       </div>
     );
@@ -311,15 +320,20 @@ const AddRecipe = ({ isEditing }) => {
   return (
     <div className="add-recipe-container">
       <h1 className="page-title">
-        {isEditing ? "Edit Recipe" : (location.state?.ingredients ? "AI Generated Recipe" : "Create Your Recipe")}
+        {isEditing
+          ? "Edit Recipe"
+          : location.state?.ingredients
+          ? "AI Generated Recipe"
+          : "Create Your Recipe"}
       </h1>
 
       {location.state?.ingredients && !isEditing && (
         <div className="alert alert-success mb-4">
           <h5>AI Generated Recipe from Your Ingredients:</h5>
           <p className="mb-0">
-            We've created a recipe using: <strong>{location.state.ingredients.join(', ')}</strong>. 
-            Feel free to review and edit before publishing!
+            We've created a recipe using:{" "}
+            <strong>{location.state.ingredients.join(", ")}</strong>. Feel free
+            to review and edit before publishing!
           </p>
         </div>
       )}
@@ -418,8 +432,9 @@ const AddRecipe = ({ isEditing }) => {
                     setImagePreview(null);
                     setRecipeData({ ...recipeData, image: null });
                   }}
+                  aria-label="Remove image"
                 >
-                  Remove
+                  <span>&times;</span>
                 </button>
               </div>
             ) : (

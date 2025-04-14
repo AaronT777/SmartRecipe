@@ -70,7 +70,26 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  font-size: 14px;
+  line-height: 1;
+  font-size: 20px;
+  font-weight: bold;
+  border: 2px solid #dc3545; 
+  color: #dc3545; 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+}
+
+.remove-image:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.remove-image span {
+  display: block;
+  line-height: 1;
+  position: relative;
+  top: -1px;
+  left: 0.5px;
 }
 
 .form-label {
