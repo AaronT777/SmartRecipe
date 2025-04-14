@@ -34,8 +34,8 @@
 
 .btn-print {
   border: 1px solid #dee2e6;
-  background-color: white;
-  color: #212529;
+  background-color: rgb(237, 237, 237);
+  color: #3c5a78;
   transition: all 0.2s ease;
 }
 
@@ -46,8 +46,17 @@
 
 .btn-print,
 .btn-edit, 
-.btn-delete {
+.btn-delete,
+.btn-danger {
   font-weight: 700 !important;
+}
+
+.btn-danger .spinner-border-sm {
+  width: 1em;
+  height: 1em;
+  border-width: 0.2em;
+  color: rgb(159, 145, 145);
+  vertical-align: middle;
 }
 
 .recipe-image-container {
