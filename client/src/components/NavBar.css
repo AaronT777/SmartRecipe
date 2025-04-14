@@ -6,9 +6,23 @@
 
 .logo-text {
   color: #4caf50;
+  font-family: "Pacifico", cursive;
   font-weight: bold;
-  font-size: 1.7rem;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 2rem;
+  line-height: 1;
+  display: inline-block; 
+}
+
+.navbar-logo {
+  height: 2rem; 
+  width: auto;
+  vertical-align: middle; 
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center; /* 垂直居中对齐 */
+  gap: 8px; /* 图标和文字之间的间距 */
 }
 
 .navbar-nav .nav-link {
@@ -44,23 +58,23 @@
   .navbar-collapse {
     margin-top: 15px;
   }
-  
+
   /* 保证所有导航项右对齐 */
   .navbar-nav {
     text-align: right;
   }
-  
+
   .navbar-nav .nav-item {
     text-align: right;
     width: 100%;
   }
-  
+
   /* 修复用户容器结构 */
   .navbar-nav .nav-item:last-child {
     display: flex;
     flex-direction: column;
   }
-  
+
   /* 重要：修改d-flex容器的行为 */
   .navbar-nav .nav-item .d-flex {
     display: flex;
@@ -68,12 +82,12 @@
     align-items: flex-end !important;
     width: 100%;
   }
-  
+
   /* 确保用户名在小屏幕上显示 */
   .navbar-nav .nav-item .d-flex .ms-1.d-none {
     display: inline !important;
   }
-  
+
   /* 修复登出按钮 */
   .navbar-nav .nav-item .d-flex .btn.btn-link.nav-link {
     width: 100%;
@@ -82,7 +96,7 @@
     border-top: 1px solid #eee;
     padding-top: 8px;
   }
-  
+
   /* 确保用户图标和名称一行 */
   .navbar-nav .nav-item .d-flex .nav-link {
     width: 100%;

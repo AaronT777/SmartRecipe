@@ -153,4 +153,17 @@ export const RestaurantService = {
   getNearbyRestaurants: (params) => API.get('/restaurants/nearby', { params }),
 };
 
+// API services for OpenAI
+export const OpenAIService = {
+  generateRecipe: async (ingredients, getTokenFn) => {
+    if (getTokenFn) {
+      const token = await getTokenFn();
+      return API.post("/openai/generate-recipe", { ingredients }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    }
+    return API.post("/openai/generate-recipe", { ingredients });
+  },
+};
+
 export default API;

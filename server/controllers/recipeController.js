@@ -1,8 +1,8 @@
 const Recipe = require("../models/Recipe");
 const User = require("../models/User");
 const path = require("path");
-const { cloudinary, extractPublicId } = require('../config/cloudinary');
-const fs = require('fs');
+const { cloudinary, extractPublicId } = require("../config/cloudinary");
+const fs = require("fs");
 
 // Get all recipes
 exports.getAllRecipes = async (req, res) => {
@@ -36,7 +36,7 @@ exports.getRecipeById = async (req, res) => {
     // Send recipe info with saved status
     res.json({
       ...recipe.toObject(),
-      isSaved
+      isSaved,
     });
   } catch (err) {
     console.error(err.message);
@@ -68,8 +68,8 @@ exports.createRecipe = async (req, res) => {
     }
 
     // Use Cloudinary URL
-    const imageUrl = req.file ? req.file.path : null;
-    
+    const imageUrl = req.file ? req.file.path : req.body.imageUrl || null;
+
     // Create new recipe object
     const newRecipe = new Recipe({
       recipeName,
@@ -79,7 +79,7 @@ exports.createRecipe = async (req, res) => {
       ingredients: JSON.parse(ingredients),
       instructions,
       userId: user._id,
-      image: imageUrl
+      image: imageUrl,
     });
 
     const recipe = await newRecipe.save();
@@ -132,10 +132,10 @@ exports.updateRecipe = async (req, res) => {
     if (req.file) {
       try {
         console.log("Cloudinary URL:", req.file.path);
-        
+
         // When using CloudinaryStorage, req.file.path is already the Cloudinary URL
         recipeFields.image = req.file.path;
-        
+
         // If the recipe already has an image and it's different from the new one, delete the old image
         if (recipe.image && recipe.image !== req.file.path) {
           console.log("Deleting old image:", recipe.image);
@@ -143,8 +143,13 @@ exports.updateRecipe = async (req, res) => {
         }
       } catch (err) {
         console.error("Error handling image upload:", err);
-        return res.status(500).json({ msg: "Error uploading image to cloud storage" });
+        return res
+          .status(500)
+          .json({ msg: "Error uploading image to cloud storage" });
       }
+    } else if (req.body.imageUrl) {
+      // If no file is uploaded but an image URL is provided (from AI-generated image)
+      recipeFields.image = req.body.imageUrl;
     }
 
     // Update recipe

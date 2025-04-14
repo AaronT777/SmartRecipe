@@ -29,12 +29,14 @@ const recipeRoutes = require('./routes/recipeRoutes');
 const userRoutes = require('./routes/userRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const restaurantRoutes = require('./routes/restaurantRoutes');
+const openaiRoutes = require('./routes/openaiRoutes');
 
 // Register all routes
 app.use('/api/recipes', recipeRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/restaurants', restaurantRoutes);
+app.use('/api/openai', openaiRoutes);
 
 // Test route
 app.get('/api', (req, res) => {

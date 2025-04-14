@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { RecipeService } from "../services/api";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { RecipeService, OpenAIService } from "../services/api";
 import { useAuth } from "../hooks/useAuth";
 import "./AddRecipe.css";
 
 const AddRecipe = ({ isEditing }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { id } = useParams();
   const { isAuthenticated, getToken } = useAuth();
 
@@ -20,9 +21,18 @@ const AddRecipe = ({ isEditing }) => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [generating, setGenerating] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [errors, setErrors] = useState({});
   const [isLoadingRecipe, setIsLoadingRecipe] = useState(isEditing);
+
+  // Check if we have ingredients from location state (from Home page)
+  useEffect(() => {
+    // If there are ingredients in the location state and we're not editing
+    if (location.state?.ingredients && !isEditing) {
+      generateRecipeFromIngredients(location.state.ingredients);
+    }
+  }, [location.state, isEditing]);
 
   // Fetch recipe data if editing
   useEffect(() => {
@@ -30,6 +40,37 @@ const AddRecipe = ({ isEditing }) => {
       fetchRecipeData();
     }
   }, [isEditing, id, isAuthenticated, getToken]);
+
+  // Generate recipe using OpenAI
+  const generateRecipeFromIngredients = async (ingredients) => {
+    setGenerating(true);
+    try {
+      const response = await OpenAIService.generateRecipe(ingredients, getToken);
+      const recipe = response.data;
+      
+      // Set recipe data from AI response
+      setRecipeData({
+        recipeName: recipe.recipeName,
+        description: recipe.description,
+        cookingTime: recipe.cookingTime,
+        calories: recipe.calories,
+        ingredients: recipe.ingredients, // Should be an array already
+        instructions: recipe.instructions, // Should be an array already
+        image: null, // We'll handle the image separately
+      });
+
+      // If there's an image URL, set the preview
+      if (recipe.image) {
+        setImagePreview(recipe.image);
+      }
+
+      setGenerating(false);
+    } catch (err) {
+      console.error("Error generating recipe:", err);
+      alert("Failed to generate recipe. Please try again or create one manually.");
+      setGenerating(false);
+    }
+  };
 
   // Fetch recipe data if editing
   const fetchRecipeData = async () => {
@@ -209,6 +250,17 @@ const AddRecipe = ({ isEditing }) => {
 
       if (recipeData.image) {
         formData.append("image", recipeData.image);
+      } else if (imagePreview) {
+        if (imagePreview.startsWith('data:')) {
+          // Process data URI image
+          const response = await fetch(imagePreview);
+          const blob = await response.blob();
+          const file = new File([blob], "ai-generated-image.jpg", { type: 'image/jpeg' });
+          formData.append("image", file);
+        } else if (imagePreview.startsWith('http')) {
+          // Directly append the Cloudinary URL
+          formData.append("imageUrl", imagePreview);
+        }
       }
 
       let response;
@@ -235,6 +287,18 @@ const AddRecipe = ({ isEditing }) => {
     }
   };
 
+  if (generating) {
+    return (
+      <div className="text-center my-5">
+        <div className="spinner-border text-success" role="status">
+          <span className="visually-hidden">Generating AI recipe...</span>
+        </div>
+        <p className="mt-2">Our AI chef is crafting a perfect recipe for you...</p>
+        <p className="text-muted">This may take a few moments</p>
+      </div>
+    );
+  }
+
   if (isLoadingRecipe) {
     return (
       <div className="text-center my-5">
@@ -249,8 +313,18 @@ const AddRecipe = ({ isEditing }) => {
   return (
     <div className="add-recipe-container">
       <h1 className="page-title">
-        {isEditing ? "Edit Recipe" : "Create Your Recipe"}
+        {isEditing ? "Edit Recipe" : (location.state?.ingredients ? "AI Generated Recipe" : "Create Your Recipe")}
       </h1>
+
+      {location.state?.ingredients && !isEditing && (
+        <div className="alert alert-success mb-4">
+          <h5>AI Generated Recipe from Your Ingredients:</h5>
+          <p className="mb-0">
+            We've created a recipe using: <strong>{location.state.ingredients.join(', ')}</strong>. 
+            Feel free to review and edit before publishing!
+          </p>
+        </div>
+      )}
 
       {Object.keys(errors).length > 0 && (
         <div className="alert alert-danger">
