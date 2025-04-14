@@ -187,13 +187,13 @@ const Profile = () => {
             className={`tab-btn ${activeTab === "created" ? "active" : ""}`}
             onClick={() => setActiveTab("created")}
           >
-            My Created Recipes
+            Created
           </button>
           <button
             className={`tab-btn ${activeTab === "saved" ? "active" : ""}`}
             onClick={() => setActiveTab("saved")}
           >
-            My Saved Recipes
+            Saved
           </button>
         </div>
 

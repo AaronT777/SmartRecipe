@@ -60,7 +60,8 @@
 .edit-btn {
   margin-left: 0;
   color: #4caf50;
-  border-color: #e0e0e0;
+  border: 2px solid #e0e0e0;
+  font-weight: bold;
 }
 
 .save-btn:hover,
