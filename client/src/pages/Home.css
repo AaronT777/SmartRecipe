@@ -162,6 +162,7 @@
   background-color: #4caf50;
   color: white;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border-color: #4caf50;
 }
 
 .more-options-btn:disabled {
@@ -184,5 +185,48 @@
   .col-md-4,
   .col-md-3 {
     margin-bottom: 20px;
+  }
+
+  .restaurants-section .d-flex.justify-content-between.align-items-center {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 15px; /* 添加垂直间距 */
+  }
+  
+  /* 让标题和按钮都占满宽度并居中 */
+  .restaurants-section .section-title {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .restaurants-section .carousel-controls {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* 修改标题装饰线的样式，使其居中显示 */
+  .restaurants-section .section-title:after {
+    left: 50%; /* 将线的左边缘设置在标题中心 */
+    transform: translateX(-50%); /* 向左移动线宽度的一半，实现真正居中 */
+    width: 40px; /* 可能略微调整线的宽度 */
+  }
+  
+  /* 调整按钮样式使其在小屏幕上更美观 */
+  .more-options-btn {
+    width: 100%;
+    max-width: 250px;
+  }
+}
+
+/* 对于更小的屏幕，进一步优化 */
+@media (max-width: 576px) {
+  .section-title {
+    font-size: 1.5rem;
+  }
+  
+  .more-options-btn {
+    font-size: 14px;
+    padding: 6px 15px;
   }
 }
