@@ -114,6 +114,8 @@ export const UserService = {
     }
     return API.get("/users/saved-recipes");
   },
+  getUserById: (userId) => API.get(`/users/${userId}`),
+  getSavedRecipesByUser: (userId) => API.get(`/users/${userId}/saved-recipes`),
 };
 
 // API services for reviews

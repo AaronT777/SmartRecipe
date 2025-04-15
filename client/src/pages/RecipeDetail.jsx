@@ -8,7 +8,7 @@ const RecipeDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { isAuthenticated, user, getToken, login } = useAuth();
-  
+
   const [recipe, setRecipe] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -35,7 +35,9 @@ const RecipeDetail = () => {
         // Check if the recipe is saved by the current user
         if (isAuthenticated && user) {
           try {
-            const savedRecipesResponse = await UserService.getSavedRecipes(getToken);
+            const savedRecipesResponse = await UserService.getSavedRecipes(
+              getToken
+            );
             const savedRecipes = savedRecipesResponse.data;
             if (savedRecipes.some((recipe) => recipe._id === id)) {
               setIsSaved(true);
@@ -109,10 +111,13 @@ const RecipeDetail = () => {
 
     try {
       setSubmittingReview(true);
-      const response = await ReviewService.createReview({
-        recipeId: id,
-        comment: reviewText,
-      }, getToken);
+      const response = await ReviewService.createReview(
+        {
+          recipeId: id,
+          comment: reviewText,
+        },
+        getToken
+      );
 
       // Add the new review to the top of the reviews list
       setReviews([response.data, ...reviews]);
@@ -225,7 +230,10 @@ const RecipeDetail = () => {
 
         {isCreator && (
           <>
-            <Link to={`/recipe/edit/${id}`} className="btn btn-primary btn-edit ms-2">
+            <Link
+              to={`/recipe/edit/${id}`}
+              className="btn btn-primary btn-edit ms-2"
+            >
               <i className="bi bi-pencil"></i> Edit
             </Link>
             <button
@@ -244,7 +252,8 @@ const RecipeDetail = () => {
                 </>
               ) : (
                 <>
-                  <i className="bi bi-trash"></i> <span className="btn-delete">Delete</span>
+                  <i className="bi bi-trash"></i>{" "}
+                  <span className="btn-delete">Delete</span>
                 </>
               )}
             </button>
@@ -274,7 +283,9 @@ const RecipeDetail = () => {
             <h2>Instructions</h2>
             <ol className="instructions-list">
               {recipe.instructions.split("\n").map((step, index) => (
-                <li key={index} className="instructions-item">{step.replace(/^\d+\.\s*/, "")}</li>
+                <li key={index} className="instructions-item">
+                  {step.replace(/^\d+\.\s*/, "")}
+                </li>
               ))}
             </ol>
           </div>
@@ -346,61 +357,73 @@ const RecipeDetail = () => {
           ) : (
             reviews.map((review) => {
               // Check if the current user is the author of the review
-              const isReviewAuthor =
-                user && review.userId?._id === user._id;
+              const isReviewAuthor = user && review.userId?._id === user._id;
+
+              // Determine the profile link based on the review author
+              const profileLink = isReviewAuthor
+                ? "/profile"
+                : `/user/${review.userId?._id}`;
 
               return (
                 <div className="review-item" key={review._id}>
                   <div className="review-header">
                     <div className="reviewer-info">
-                      {review.userId?.picture ? (
-                        <img 
-                          src={review.userId.picture} 
-                          alt={review.userId.username} 
-                          className="rounded-circle me-2" 
-                          width="32" 
-                          height="32"
-                        />
-                      ) : (
-                        <span className="user-icon">👤</span>
-                      )}
-                      <span className="reviewer-name">
-                        {review.userId?.username || "Anonymous"}
-                      </span>
-                    </div>
-                    <div className="d-flex align-items-center">
-                      <div className="review-date me-3">
-                        {new Date(review.timestamp).toLocaleDateString(
-                          "en-US",
-                          {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          }
+                      <Link to={profileLink} className="user-profile-link">
+                        {review.userId?.picture ? (
+                          <img
+                            src={review.userId.picture}
+                            alt={review.userId.username}
+                            className="rounded-circle me-2"
+                            width="32"
+                            height="32"
+                          />
+                        ) : (
+                          <div className="review-avatar">
+                            {review.userId?.username
+                              ? review.userId.username.charAt(0)
+                              : "?"}
+                          </div>
                         )}
-                      </div>
-
-                      {/* Show delete button only for the current user's reviews */}
-                      {isReviewAuthor && (
-                        <button
-                          className="btn btn-sm btn-outline-danger"
-                          onClick={() => handleDeleteReview(review._id)}
-                          disabled={deletingReviewId === review._id}
-                        >
-                          {deletingReviewId === review._id ? (
-                            <span
-                              className="spinner-border spinner-border-sm"
-                              role="status"
-                              aria-hidden="true"
-                            ></span>
-                          ) : (
-                            <i className="bi bi-trash"></i>
-                          )}
-                        </button>
-                      )}
+                        <span className="reviewer-name">
+                          {review.userId?.username || "Anonymous"}
+                        </span>
+                      </Link>
+                    </div>
+                    <div className="review-date">
+                      {new Date(review.timestamp).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
                     </div>
                   </div>
-                  <div className="review-content">{review.comment}</div>
+
+                  <div className="d-flex mt-2">
+                    <div className="review-content flex-grow-1">
+                      {review.comment}
+                    </div>
+
+                    {/* 删除按钮使用固定尺寸类 */}
+                    {isReviewAuthor && (
+                      <button
+                        className="btn btn-sm btn-danger review-delete-btn ms-3"
+                        onClick={() => handleDeleteReview(review._id)}
+                        disabled={deletingReviewId === review._id}
+                      >
+                        {deletingReviewId === review._id ? (
+                          <span
+                            className="spinner-border spinner-border-sm"
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
+                        ) : (
+                          <>
+                            <i className="bi bi-trash"></i> Delete
+                          </>
+                        )}
+                      </button>
+                    )}
+                  </div>
                 </div>
               );
             })
