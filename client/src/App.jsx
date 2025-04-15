@@ -11,6 +11,7 @@ import AddRecipe from './pages/AddRecipe';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 import AuthRequiredRoute from './components/AuthRequiredRoute';
+import UserProfile from './pages/UserProfile';
 
 // Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -45,6 +46,7 @@ function App() {
           <Route path="/" element={<Home isLoggedIn={isAuthenticated} user={user} />} />
           <Route path="/search" element={<Search />} />
           <Route path="/recipe/:id" element={<RecipeDetail />} />
+          <Route path="/user/:userId" element={<UserProfile />} />
           
           {/* Protected routes */}
           <Route 
