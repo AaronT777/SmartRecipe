@@ -155,11 +155,11 @@ const Profile = () => {
     <div className="profile-container">
       <div className="profile-header">
         <div className="profile-info">
-          <div className="profile-avatar">
+          <div className="profile-avatar" aria-hidden="true">
             {user?.picture ? (
               <img 
                 src={user.picture} 
-                alt={user.username} 
+                alt=""
                 className="rounded-circle" 
                 width="80" 
                 height="80"
@@ -176,34 +176,48 @@ const Profile = () => {
         <button
           className="btn btn-outline-success edit-profile-btn"
           onClick={() => setShowEditModal(true)}
+          aria-label="Edit your profile"
         >
           Edit Profile
         </button>
       </div>
 
       <div className="recipes-section">
-        <div className="recipes-tabs">
+        <div className="recipes-tabs" role="tablist" aria-label="Recipe collections">
           <button
             className={`tab-btn ${activeTab === "created" ? "active" : ""}`}
             onClick={() => setActiveTab("created")}
+            aria-selected={activeTab === "created"}
+            role="tab"
+            aria-controls="created-recipes-panel"
+            id="created-tab"
           >
             Created
           </button>
           <button
             className={`tab-btn ${activeTab === "saved" ? "active" : ""}`}
             onClick={() => setActiveTab("saved")}
+            aria-selected={activeTab === "saved"}
+            role="tab"
+            aria-controls="saved-recipes-panel"
+            id="saved-tab"
           >
             Saved
           </button>
         </div>
 
-        <div className="tab-content">
+        <div 
+          className="tab-content" 
+          role="tabpanel" 
+          id={activeTab === "created" ? "created-recipes-panel" : "saved-recipes-panel"}
+          aria-labelledby={activeTab === "created" ? "created-tab" : "saved-tab"}
+        >
           {activeTab === "created" ? (
             <>
               <div className="d-flex justify-content-between align-items-center mb-4">
                 <h2 className="section-title">My Created Recipes</h2>
-                <Link to="/build" className="btn btn-success">
-                  <i className="bi bi-plus-lg"></i> Create New Recipe
+                <Link to="/build" className="btn btn-success" aria-label="Create new recipe">
+                  <i className="bi bi-plus-lg" aria-hidden="true"></i> Create New Recipe
                 </Link>
               </div>
 
@@ -266,20 +280,21 @@ const Profile = () => {
           className="modal-backdrop"
           style={{ display: "block", background: "rgba(0,0,0,0.5)" }}
         >
-          <div className="modal" tabIndex="-1" style={{ display: "block" }}>
+          <div className="modal" tabIndex="-1" style={{ display: "block" }} aria-labelledby="editProfileTitle" aria-modal="true">
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title">Edit Profile</h5>
+                  <h5 className="modal-title" id="editProfileTitle">Edit Profile</h5>
                   <button
                     type="button"
                     className="btn-close"
                     onClick={() => setShowEditModal(false)}
+                    aria-label="Close"
                   ></button>
                 </div>
                 <div className="modal-body">
                   {updateErrors.general && (
-                    <div className="alert alert-danger">
+                    <div className="alert alert-danger" role="alert">
                       {updateErrors.general}
                     </div>
                   )}
@@ -297,9 +312,10 @@ const Profile = () => {
                         name="username"
                         value={editFormData.username}
                         onChange={handleEditChange}
+                        aria-describedby={updateErrors.username ? "usernameError" : undefined}
                       />
                       {updateErrors.username && (
-                        <div className="invalid-feedback">
+                        <div className="invalid-feedback" id="usernameError">
                           {updateErrors.username}
                         </div>
                       )}
@@ -317,13 +333,14 @@ const Profile = () => {
                         name="email"
                         value={editFormData.email}
                         disabled={true}  // Email cannot be changed with Auth0
+                        aria-describedby="emailHelp"
                       />
                       {updateErrors.email && (
                         <div className="invalid-feedback">
                           {updateErrors.email}
                         </div>
                       )}
-                      <small className="form-text text-muted">
+                      <small id="emailHelp" className="form-text text-muted">
                         Email address cannot be changed through SmartRecipe. 
                         Please update it through your Auth0 account settings.
                       </small>

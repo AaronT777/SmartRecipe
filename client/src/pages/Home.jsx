@@ -95,9 +95,9 @@ export default function Home({ isLoggedIn }) {
     navigate('/build', { state: { ingredients } });
   };
 
-  const handleRestaurantDetails = (restaurantUrl) => {
+  const handleRestaurantDetails = (restaurantUrl, restaurantName) => {
     // Open the restaurant's Yelp page in a new tab
-    window.open(restaurantUrl, '_blank');
+    window.open(restaurantUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -110,13 +110,16 @@ export default function Home({ isLoggedIn }) {
 
         <div className="search-container">
           <div className="input-group mb-3">
+            <label htmlFor="ingredientsInput" className="visually-hidden">Enter ingredients</label>
             <input
               type="text"
+              id="ingredientsInput"
               className="form-control"
               placeholder="Enter ingredients separated by commas (e.g., chicken, rice, tomatoes)"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleFindRecipes()}
+              aria-label="Enter ingredients separated by commas"
             />
           </div>
 
@@ -124,6 +127,7 @@ export default function Home({ isLoggedIn }) {
             className="btn btn-success w-100"
             onClick={handleFindRecipes}
             disabled={!inputValue.trim() || isLoading}
+            aria-label="Find recipes with entered ingredients"
           >
             {isLoading ? "Finding Recipes..." : "Find Recipes"}
           </button>
@@ -131,9 +135,9 @@ export default function Home({ isLoggedIn }) {
       </section>
 
       {/* Restaurant suggestions section */}
-      <section className="restaurants-section my-5">
+      <section className="restaurants-section my-5" aria-labelledby="restaurant-heading">
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <h2 className="section-title mb-0">
+          <h2 className="section-title mb-0" id="restaurant-heading">
             If you don't want to cook today
           </h2>
           <div className="carousel-controls">
@@ -141,6 +145,7 @@ export default function Home({ isLoggedIn }) {
               className="more-options-btn" 
               onClick={handleRefresh}
               disabled={isLoadingRestaurants}
+              aria-label="Show more restaurant options"
             >
               {isLoadingRestaurants ? 
                 <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : 
@@ -165,20 +170,22 @@ export default function Home({ isLoggedIn }) {
                   <img
                     src={restaurant.image}
                     className="card-img-top"
-                    alt={restaurant.name}
+                    alt={`${restaurant.name} restaurant`}
                     onError={(e) => {
                       e.target.src = "/images/placeholder.png";
                     }}
                   />
                   <div className="card-body">
-                    <h5 className="card-title">{restaurant.name}</h5>
+                    {/* Use h3 for proper heading hierarchy */}
+                    <h3 className="card-title">{restaurant.name}</h3>
                     <div className="restaurant-meta">
                       <span>{restaurant.distance} min</span>
                       <span>{restaurant.price}</span>
                     </div>
                     <button 
                       className="btn btn-success w-100 mt-2"
-                      onClick={() => handleRestaurantDetails(restaurant.url)}
+                      onClick={() => handleRestaurantDetails(restaurant.url, restaurant.name)}
+                      aria-label={`View details for ${restaurant.name}`}
                     >
                       Details
                     </button>

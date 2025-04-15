@@ -1,0 +1,162 @@
+/* accessibility.css - Place this file in client/src/ and import it in App.jsx */
+
+/* Update colors for better contrast */
+
+/* Update logo and navbar links color */
+.logo-text {
+  color: #2e7d32 !important; /* Darker green for better contrast */
+  font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+  color: #2e7d32 !important; /* Darker green for better contrast */
+  font-weight: 600;
+}
+
+/* Update button colors */
+.btn-success {
+  background-color: #2e7d32 !important; /* Darker green */
+  border-color: #2e7d32 !important;
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active {
+  background-color: #1b5e20 !important; /* Even darker on hover */
+  border-color: #1b5e20 !important;
+}
+
+.btn-outline-success {
+  color: #2e7d32 !important;
+  border-color: #2e7d32 !important;
+}
+
+.btn-outline-success:hover {
+  background-color: #2e7d32 !important;
+  border-color: #2e7d32 !important;
+  color: white !important;
+}
+
+/* Fix More Options button */
+.more-options-btn {
+  color: #2e7d32 !important;
+  border: 2px solid #2e7d32 !important;
+}
+
+.more-options-btn:hover {
+  background-color: #2e7d32 !important;
+  color: white !important;
+  border-color: #2e7d32 !important;
+}
+
+/* Fix card title and text contrast */
+.card-title {
+  color: #212121 !important; /* Ensure dark text for card titles */
+  font-weight: 600;
+}
+
+.card-text {
+  color: #212121 !important;
+}
+
+/* Fix recipe meta info contrast */
+.recipe-meta span, 
+.restaurant-meta span,
+.time-info,
+.calorie-info {
+  color: #424242 !important; /* Darker gray for better contrast */
+  font-weight: 500;
+}
+
+/* Update for nav link hover state */
+.navbar-nav .nav-link:hover {
+  color: #ffffff !important;
+  background-color: #2e7d32 !important;
+}
+
+/* Fix for user icon color */
+.user-icon {
+  color: #2e7d32 !important;
+}
+
+/* Fix for link styles */
+.btn-link {
+  color: #2e7d32 !important;
+}
+
+.btn-link:hover {
+  color: #1b5e20 !important;
+}
+
+/* Fix for Edit button */
+.btn-light.edit-btn {
+  background-color: #e0e0e0 !important;
+  color: #212121 !important;
+  border-color: #bdbdbd !important;
+  font-weight: 500;
+}
+
+.btn-light.edit-btn:hover {
+  background-color: #bdbdbd !important;
+  color: #000000 !important;
+}
+
+/* Kitchen section heading */
+.kitchen-section h1 {
+  color: #2e7d32 !important; /* Darker green */
+}
+
+/* Fix section titles */
+.section-title {
+  color: #212121 !important;
+  font-weight: 600;
+}
+
+/* Fix sort controls in search page */
+.sort-control label {
+  color: #424242 !important;
+  font-weight: 500;
+}
+
+/* Fix form controls */
+.form-control:focus {
+  border-color: #2e7d32 !important;
+  box-shadow: 0 0 0 0.25rem rgba(46, 125, 50, 0.25) !important;
+}
+
+/* Visually hidden class for screen readers */
+.visually-hidden:not(:focus):not(:active) {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* Update colors for better contrast */
+
+/* Fix 404 page */
+.not-found-title {
+  color: #2e7d32 !important; /* Darker green instead of light green */
+  font-weight: 800;
+}
+
+/* Profile page tab buttons */
+.tab-btn {
+  color: #424242 !important; /* Darker gray instead of light gray */
+  font-weight: bold;
+}
+
+.tab-btn.active {
+  color: #2e7d32 !important; /* Darker green */
+}
+
+.tab-btn.active::after {
+  background-color: #2e7d32 !important;
+}
+
+.tab-btn:hover {
+  color: #1b5e20 !important;
+}

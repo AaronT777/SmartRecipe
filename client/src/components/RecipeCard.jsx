@@ -1,3 +1,5 @@
+// Updated RecipeCard.jsx with proper heading hierarchy
+
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -78,18 +80,19 @@ const RecipeCard = ({ recipe, showSaveButton = true, onUnsave = null }) => {
         <img 
           src={recipe.image || '/images/placeholder.png'} 
           className="card-img-top" 
-          alt={recipeName}
+          alt={`${recipeName} dish`}
           onError={handleImageError}
         />
         <div className="card-body d-flex flex-column">
-          <h5 className="card-title">{recipeName}</h5>
+          {/* Change h5 to h3 for proper heading hierarchy */}
+          <h3 className="card-title">{recipeName}</h3>
           <p className="card-text flex-grow-1">{description?.substring(0, 100)}{description?.length > 100 ? '...' : ''}</p>
           <div className="recipe-meta">
             <span>{cookingTime ? `${cookingTime} min` : 'Time N/A'}</span>
             <span>{calories ? `${calories} calories` : 'Calories N/A'}</span>
           </div>
           <div className="card-actions">
-            <Link to={`/recipe/${_id}`} className="btn btn-outline-success view-btn">
+            <Link to={`/recipe/${_id}`} className="btn btn-outline-success view-btn" aria-label={`View ${recipeName} recipe details`}>
               View
             </Link>
             
@@ -98,19 +101,20 @@ const RecipeCard = ({ recipe, showSaveButton = true, onUnsave = null }) => {
                 className={`btn ${isSaved ? 'btn-success' : 'btn-outline-success'} save-btn`}
                 onClick={handleSaveRecipe}
                 disabled={isSaving || isSaved}
+                aria-label={isSaved ? `${recipeName} recipe saved` : `Save ${recipeName} recipe`}
               >
                 {isSaving ? (
                   <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 ) : isSaved ? (
-                  <span><i className="bi bi-bookmark-check"></i> Saved</span>
+                  <span><i className="bi bi-bookmark-check" aria-hidden="true"></i> Saved</span>
                 ) : (
-                  <span><i className="bi bi-bookmark"></i> Save</span>
+                  <span><i className="bi bi-bookmark" aria-hidden="true"></i> Save</span>
                 )}
               </button>
             )}
             
             {isCreator && (
-              <Link to={`/recipe/edit/${_id}`} className="btn btn-light edit-btn">
+              <Link to={`/recipe/edit/${_id}`} className="btn btn-light edit-btn" aria-label={`Edit ${recipeName} recipe`}>
                 Edit
               </Link>
             )}
@@ -119,6 +123,7 @@ const RecipeCard = ({ recipe, showSaveButton = true, onUnsave = null }) => {
               <button 
                 className="btn btn-outline-danger unsave-btn"
                 onClick={handleUnsaveRecipe}
+                aria-label={`Unsave ${recipeName} recipe`}
               >
                 Unsave
               </button>
