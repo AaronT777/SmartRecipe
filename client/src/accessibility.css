@@ -1,0 +1,79 @@
+/* Update colors for better contrast */
+
+/* Update logo and navbar links color */
+.logo-text {
+  color: #2e7d32 !important; /* Darker green for better contrast */
+  font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+  color: #2e7d32 !important; /* Darker green for better contrast */
+  font-weight: 600;
+}
+
+/* Update button colors */
+.btn-success {
+  background-color: #2e7d32 !important; /* Darker green */
+  border-color: #2e7d32 !important;
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active {
+  background-color: #1b5e20 !important; /* Even darker on hover */
+  border-color: #1b5e20 !important;
+}
+
+.btn-outline-success {
+  color: #2e7d32 !important;
+  border-color: #2e7d32 !important;
+}
+
+.btn-outline-success:hover {
+  background-color: #2e7d32 !important;
+  border-color: #2e7d32 !important;
+  color: white !important;
+}
+
+/* Fix More Options button */
+.more-options-btn {
+  color: #2e7d32 !important;
+  border: 2px solid #2e7d32 !important;
+}
+
+.more-options-btn:hover {
+  background-color: #2e7d32 !important;
+  color: white !important;
+  border-color: #2e7d32 !important;
+}
+
+/* Fix card title contrast */
+.card-title {
+  color: #212121 !important; /* Ensure dark text for card titles */
+  font-weight: 600;
+}
+
+/* Fix text in kitchen section */
+.kitchen-section h1 {
+  color: #2e7d32 !important; /* Darker green */
+}
+
+/* Update for nav link hover state */
+.navbar-nav .nav-link:hover {
+  color: #ffffff !important;
+  background-color: #2e7d32 !important;
+}
+
+/* Fix for user icon color */
+.user-icon {
+  color: #2e7d32 !important;
+}
+
+/* Fix for link styles */
+.btn-link {
+  color: #2e7d32 !important;
+}
+
+.btn-link:hover {
+  color: #1b5e20 !important;
+}
