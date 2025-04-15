@@ -87,19 +87,19 @@
 }
 
 .navbar-toggler {
-  border: 3px solid #4caf50 !important;
+  border: 3px solid #2e7d32 !important;
   background-color: white;
   padding: 0.25rem 0.5rem;
   transition: all 0.3s ease;
 }
 
 .navbar-toggler .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%234caf50' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%232e7d32' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
   transition: background-image 0.3s ease;
 }
 
 .navbar-toggler:hover {
-  background-color: #4caf50;
+  background-color: #2e7d32;
 }
 
 .navbar-toggler:hover .navbar-toggler-icon {
