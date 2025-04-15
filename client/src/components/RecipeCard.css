@@ -71,8 +71,9 @@
 }
 
 .unsave-btn {
-  border-color: #dc3545;
+  border: 2px solid #dc3545;
   color: #dc3545;
+  font-weight: 700;
 }
 
 .unsave-btn:hover {
