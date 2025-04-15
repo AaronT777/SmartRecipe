@@ -256,10 +256,10 @@ const AddRecipe = ({ isEditing }) => {
       formData.append("instructions", recipeData.instructions.join("\n"));
 
       if (recipeData.image) {
-        // 用户上传的文件
+        // This is the file uploaded by the user
         formData.append("image", recipeData.image);
       } else if (imagePreview && imagePreview.startsWith("data:")) {
-        // 处理base64图片数据 - 这是AI生成的尚未上传的图片
+        // Deal with base64 image data. This is the AI-generated image that hasn't been uploaded yet.
         const response = await fetch(imagePreview);
         const blob = await response.blob();
         const file = new File([blob], "ai-generated-image.jpg", {
