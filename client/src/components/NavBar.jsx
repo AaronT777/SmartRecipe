@@ -71,7 +71,7 @@ export default function NavBar() {
                 </div>
               ) : isAuthenticated ? (
                 <div className="d-flex align-items-center">
-                  <NavLink className="nav-link nav-user" to="/profile" aria-label="Go to your profile"> 
+                  <NavLink className="nav-link nav-user" to="/profile" aria-label="Go to your profile">
                     <span className="user-icon" aria-hidden="true">
                       {user?.picture ? (
                         <img
@@ -111,7 +111,7 @@ export default function NavBar() {
                   >
                     <FontAwesomeIcon 
                       icon={faUserPlus} 
-                      className="logout-icon"
+                      className="login-icon"
                       aria-hidden="true"
                     />{" "}
                     Login
