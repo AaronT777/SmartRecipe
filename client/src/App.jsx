@@ -18,6 +18,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 // App-wide styles
 import './App.css';
+// Import the accessibility CSS
+import './accessibility.css';
 
 function App() {
   const { isAuthenticated, isLoading, user } = useAuth();
@@ -35,9 +37,10 @@ function App() {
   
   return (
     <div className="app-container">
+      <a href="#main-content" className="visually-hidden-focusable">Skip to main content</a>
       <NavBar />
       
-      <main className="main-content">
+      <main id="main-content" className="main-content">
         <Routes>
           <Route path="/" element={<Home isLoggedIn={isAuthenticated} user={user} />} />
           <Route path="/search" element={<Search />} />
