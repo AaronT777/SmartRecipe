@@ -13,5 +13,7 @@ router.put('/profile', auth, userController.updateUserProfile);
 router.post('/save-recipe', auth, userController.saveRecipe);
 router.delete('/unsave-recipe/:id', auth, userController.unsaveRecipe);
 router.get('/saved-recipes', auth, userController.getSavedRecipes);
+router.get('/:userId', userController.getUserById);
+router.get('/:userId/saved-recipes', userController.getSavedRecipesByUser);
 
 module.exports = router;
