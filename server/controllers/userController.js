@@ -162,3 +162,52 @@ exports.getSavedRecipes = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+
+exports.getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+    
+    // return only the necessary fields
+    res.json({
+      _id: user._id,
+      username: user.username,
+      picture: user.picture 
+    });
+  } catch (err) {
+    console.error(err.message);
+    
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+    
+    res.status(500).send('Server Error');
+  }
+};
+
+exports.getSavedRecipesByUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+    
+    const savedRecipes = await Recipe.find({
+      _id: { $in: user.savedRecipes }
+    });
+    
+    res.json(savedRecipes);
+  } catch (err) {
+    console.error(err.message);
+    
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+    
+    res.status(500).send('Server Error');
+  }
+};
