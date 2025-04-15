@@ -249,6 +249,21 @@ h2:after {
   margin-right: 8px;
 }
 
+.review-body {
+  display: flex;
+  justify-content: space-between;
+}
+
+.review-body .btn-danger {
+  margin-right: 16px;
+}
+
+.review-delete-btn {
+  min-width: 90px;
+  align-self: flex-start; 
+  margin-top: 0; 
+}
+
 @media print {
   .action-buttons,
   .reviews-section,

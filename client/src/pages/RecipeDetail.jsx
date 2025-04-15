@@ -389,42 +389,41 @@ const RecipeDetail = () => {
                         </span>
                       </Link>
                     </div>
-                    <div className="d-flex align-items-center">
-                      <div className="review-date me-3">
-                        {new Date(review.timestamp).toLocaleDateString(
-                          "en-US",
-                          {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          }
-                        )}
-                      </div>
-
-                      {/* Show delete button only for the current user's reviews */}
-                      {isReviewAuthor && (
-                        <button
-                          className="btn btn-sm btn-danger"
-                          onClick={() => handleDeleteReview(review._id)}
-                          disabled={deletingReviewId === review._id}
-                        >
-                          {deletingReviewId === review._id ? (
-                            <span
-                              className="spinner-border spinner-border-sm"
-                              role="status"
-                              aria-hidden="true"
-                            ></span>
-                          ) : (
-                            <>
-                              <i className="bi bi-trash"></i>{" "}
-                              <span className="btn-delete">Delete</span>
-                            </>
-                          )}
-                        </button>
-                      )}
+                    <div className="review-date">
+                      {new Date(review.timestamp).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
                     </div>
                   </div>
-                  <div className="review-content">{review.comment}</div>
+
+                  <div className="d-flex mt-2">
+                    <div className="review-content flex-grow-1">
+                      {review.comment}
+                    </div>
+
+                    {/* 删除按钮使用固定尺寸类 */}
+                    {isReviewAuthor && (
+                      <button
+                        className="btn btn-sm btn-danger review-delete-btn ms-3"
+                        onClick={() => handleDeleteReview(review._id)}
+                        disabled={deletingReviewId === review._id}
+                      >
+                        {deletingReviewId === review._id ? (
+                          <span
+                            className="spinner-border spinner-border-sm"
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
+                        ) : (
+                          <>
+                            <i className="bi bi-trash"></i> Delete
+                          </>
+                        )}
+                      </button>
+                    )}
+                  </div>
                 </div>
               );
             })
