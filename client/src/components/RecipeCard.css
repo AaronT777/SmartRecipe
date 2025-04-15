@@ -59,7 +59,7 @@
 .save-btn,
 .edit-btn {
   margin-left: 0;
-  color: #4caf50;
+  color: #2e7d32 !important;
   border: 2px solid #e0e0e0;
   font-weight: bold;
 }
