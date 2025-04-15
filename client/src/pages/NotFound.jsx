@@ -12,10 +12,10 @@ const NotFound = () => {
           The page you're looking for doesn't exist or has been moved.
         </p>
         <div className="not-found-actions">
-          <Link to="/" className="btn btn-success">
+          <Link to="/" className="btn btn-success" aria-label="Go to Homepage">
             Go to Homepage
           </Link>
-          <Link to="/search" className="btn btn-outline-success ms-3">
+          <Link to="/search" className="btn btn-outline-success ms-3" aria-label="Search for recipes">
             Search Recipes
           </Link>
         </div>
