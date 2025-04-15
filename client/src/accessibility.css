@@ -9,7 +9,7 @@
 }
 
 .navbar-nav .nav-link {
-  color: #2e7d32 !important; /* Darker green for better contrast */
+  color: #2e7d32; /* Darker green for better contrast */
   font-weight: 600;
 }
 
@@ -86,14 +86,6 @@
 
 .btn-link:hover {
   color: #1b5e20 !important;
-}
-
-/* Fix for Edit button */
-.btn-light.edit-btn {
-  background-color: #e0e0e0 !important;
-  color: #212121 !important;
-  border-color: #bdbdbd !important;
-  font-weight: 500;
 }
 
 .btn-light.edit-btn:hover {
