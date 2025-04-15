@@ -69,7 +69,7 @@ export default function NavBar() {
                 </div>
               ) : isAuthenticated ? (
                 <div className="d-flex align-items-center">
-                  <NavLink className="nav-link" to="/profile">
+                  <NavLink className="nav-link nav-user" to="/profile">
                     <span className="user-icon">
                       {user?.picture ? (
                         <img
@@ -87,18 +87,18 @@ export default function NavBar() {
                       {user?.username}
                     </span>
                   </NavLink>
-                  <button className="btn btn-link nav-link" onClick={logout}>
+                  <button className="btn btn-link nav-link nav-logout" onClick={logout}>
                     <FontAwesomeIcon
                       icon={faSignOutAlt}
-                      className="user-icon"
+                      className="logout-icon"
                     />{" "}
                     Logout
                   </button>
                 </div>
               ) : (
                 <div className="d-flex align-items-center">
-                  <button className="btn btn-link nav-link" onClick={login}>
-                    <FontAwesomeIcon icon={faUserPlus} className="user-icon" />{" "}
+                  <button className="btn btn-link nav-link nav-login" onClick={login}>
+                    <FontAwesomeIcon icon={faUserPlus} className="login-icon" />{" "}
                     Login
                   </button>
                 </div>

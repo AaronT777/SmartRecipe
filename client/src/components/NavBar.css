@@ -41,10 +41,37 @@
   border-radius: 20px;
 }
 
-.user-icon {
+.nav-user {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link .user-icon {
   font-size: 1rem;
   color: #4caf50;
   transition: all 0.3s ease;
+  margin-right: 3px;
+}
+
+.nav-logout {
+  display: flex;
+  align-items: center;
+}
+
+.nav-logout .logout-icon {
+  margin-right: 4px;
+  margin-top: 3px;
+}
+
+.nav-login {
+  display: flex;
+  align-items: center;
+
+}
+
+.nav-login .login-icon {
+  font-size: 1rem;
+  margin-right: 5px;
 }
 
 .nav-link.active .user-icon,
@@ -121,9 +148,9 @@
   .navbar-nav .nav-item .d-flex .btn.btn-link.nav-link {
     width: 100%;
     text-align: right;
-    margin-top: 8px;
-    border-top: 1px solid #eee;
-    padding-top: 8px;
+    /* margin-top: 8px; */
+    /* border-top: 1px solid #eee; */
+    /* padding-top: 8px; */
   }
 
   /* 确保用户图标和名称一行 */
