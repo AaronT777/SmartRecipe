@@ -134,3 +134,29 @@
   white-space: nowrap;
   width: 1px;
 }
+
+/* Update colors for better contrast */
+
+/* Fix 404 page */
+.not-found-title {
+  color: #2e7d32 !important; /* Darker green instead of light green */
+  font-weight: 800;
+}
+
+/* Profile page tab buttons */
+.tab-btn {
+  color: #424242 !important; /* Darker gray instead of light gray */
+  font-weight: bold;
+}
+
+.tab-btn.active {
+  color: #2e7d32 !important; /* Darker green */
+}
+
+.tab-btn.active::after {
+  background-color: #2e7d32 !important;
+}
+
+.tab-btn:hover {
+  color: #1b5e20 !important;
+}
