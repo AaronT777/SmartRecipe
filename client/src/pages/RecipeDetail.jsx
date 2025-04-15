@@ -368,7 +368,7 @@ const RecipeDetail = () => {
                 <div className="review-item" key={review._id}>
                   <div className="review-header">
                     <div className="reviewer-info">
-                    <Link to={profileLink} className="user-profile-link">
+                      <Link to={profileLink} className="user-profile-link">
                         {review.userId?.picture ? (
                           <img
                             src={review.userId.picture}
@@ -404,7 +404,7 @@ const RecipeDetail = () => {
                       {/* Show delete button only for the current user's reviews */}
                       {isReviewAuthor && (
                         <button
-                          className="btn btn-sm btn-outline-danger"
+                          className="btn btn-sm btn-danger"
                           onClick={() => handleDeleteReview(review._id)}
                           disabled={deletingReviewId === review._id}
                         >
@@ -415,7 +415,10 @@ const RecipeDetail = () => {
                               aria-hidden="true"
                             ></span>
                           ) : (
-                            <i className="bi bi-trash"></i>
+                            <>
+                              <i className="bi bi-trash"></i>{" "}
+                              <span className="btn-delete">Delete</span>
+                            </>
                           )}
                         </button>
                       )}
