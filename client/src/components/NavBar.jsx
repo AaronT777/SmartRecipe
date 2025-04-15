@@ -14,13 +14,15 @@ export default function NavBar() {
   const { isAuthenticated, isLoading, user, login, logout } = useAuth();
 
   return (
-    <nav className="navbar navbar-expand-xl navbar-light">
+    <nav className="navbar navbar-expand-xl navbar-light" aria-label="Main navigation">
       <div className="container">
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand" to="/" aria-label="SmartRecipe Home">
           <img
             className="navbar-logo"
             src="/images/logo.png"
             alt="SmartRecipe Logo"
+            width="32"
+            height="32"
           />
           <span className="logo-text">SmartRecipe</span>
         </Link>
@@ -43,17 +45,17 @@ export default function NavBar() {
         >
           <ul className="navbar-nav">
             <li className="nav-item">
-              <NavLink className="nav-link" to="/" end>
+              <NavLink className="nav-link" to="/" end aria-label="Home page">
                 Home
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/build">
+              <NavLink className="nav-link" to="/build" aria-label="Create your own recipe">
                 Build Your Own
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/search">
+              <NavLink className="nav-link" to="/search" aria-label="Search recipes">
                 Search
               </NavLink>
             </li>
@@ -69,12 +71,12 @@ export default function NavBar() {
                 </div>
               ) : isAuthenticated ? (
                 <div className="d-flex align-items-center">
-                  <NavLink className="nav-link" to="/profile">
-                    <span className="user-icon">
+                  <NavLink className="nav-link nav-user" to="/profile" aria-label="Go to your profile"> 
+                    <span className="user-icon" aria-hidden="true">
                       {user?.picture ? (
                         <img
                           src={user.picture}
-                          alt={user.username}
+                          alt=""
                           className="rounded-circle"
                           width="24"
                           height="24"
@@ -87,18 +89,31 @@ export default function NavBar() {
                       {user?.username}
                     </span>
                   </NavLink>
-                  <button className="btn btn-link nav-link" onClick={logout}>
+                  <button 
+                    className="btn btn-link nav-link nav-logout" 
+                    onClick={logout}
+                    aria-label="Logout"
+                  >
                     <FontAwesomeIcon
                       icon={faSignOutAlt}
-                      className="user-icon"
+                      className="logout-icon"
+                      aria-hidden="true"
                     />{" "}
                     Logout
                   </button>
                 </div>
               ) : (
                 <div className="d-flex align-items-center">
-                  <button className="btn btn-link nav-link" onClick={login}>
-                    <FontAwesomeIcon icon={faUserPlus} className="user-icon" />{" "}
+                  <button 
+                    className="btn btn-link nav-link nav-login" 
+                    onClick={login}
+                    aria-label="Login or register"
+                  >
+                    <FontAwesomeIcon 
+                      icon={faUserPlus} 
+                      className="logout-icon"
+                      aria-hidden="true"
+                    />{" "}
                     Login
                   </button>
                 </div>
