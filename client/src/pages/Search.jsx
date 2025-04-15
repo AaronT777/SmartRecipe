@@ -112,12 +112,15 @@ const Search = () => {
       <div className="search-section">
         <form onSubmit={handleSearch}>
           <div className="input-group mb-3">
+            <label htmlFor="searchInput" className="visually-hidden">Search ingredients or recipe names</label>
             <input
               type="text"
+              id="searchInput"
               className="form-control"
               placeholder="Search ingredients or recipe names"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              aria-label="Search ingredients or recipe names"
             />
             {/* Add clear button that appears only when there is text */}
             {searchQuery && (
@@ -125,14 +128,16 @@ const Search = () => {
                 className="btn btn-outline-success clear-search-btn" 
                 type="button"
                 onClick={handleClearSearch}
+                aria-label="Clear search"
               >
-                <span>&times;</span>
+                <span aria-hidden="true">&times;</span>
               </button>
             )}
             <button 
               className="btn btn-success" 
               type="submit"
               disabled={isLoading}
+              aria-label="Search for recipes"
             >
               Search
             </button>
@@ -148,11 +153,13 @@ const Search = () => {
           </h2>
           
           <div className="sort-control">
-            <label className="me-2">Sort by:</label>
+            <label htmlFor="sortSelect" className="me-2">Sort by:</label>
             <select 
+              id="sortSelect"
               className="form-select form-select-sm" 
               value={sortOrder}
               onChange={handleSortChange}
+              aria-label="Sort recipe results"
             >
               <option value="relevance">Relevance</option>
               <option value="time-asc">Cooking Time (Low to High)</option>
