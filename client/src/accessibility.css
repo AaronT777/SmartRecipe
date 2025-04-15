@@ -17,6 +17,7 @@
 .btn-success {
   background-color: #2e7d32 !important; /* Darker green */
   border-color: #2e7d32 !important;
+  color: white !important; /* White text for better contrast */
 }
 
 .btn-success:hover,
