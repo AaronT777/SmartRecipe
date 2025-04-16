@@ -2,10 +2,21 @@
 
 Iteration 3 represents the final evolution of SmartRecipe, introducing AI-powered features, enhanced authentication, and improved accessibility. This update transforms the application into a modern, AI-driven recipe platform with cloud storage capabilities and universal design principles.
 
-![image](https://github.com/user-attachments/assets/ai-recipe-generation.png)
-![image](https://github.com/user-attachments/assets/cloudinary-integration.png)
-![image](https://github.com/user-attachments/assets/auth0-implementation.png)
-![image](https://github.com/user-attachments/assets/accessibility-improvements.png)
+![image](https://github.com/user-attachments/assets/e4080000-34a5-491e-81b4-2c98f28dbcff)
+![image](https://github.com/user-attachments/assets/b134e1a7-f651-4cdd-9184-310e244b3791)
+![image](https://github.com/user-attachments/assets/74a11dd2-6477-4b38-be35-5f8c4f3838b1)
+![image](https://github.com/user-attachments/assets/da974f8a-0ceb-4168-a20a-11e19d3b3fd1)
+![image](https://github.com/user-attachments/assets/cdd7dff1-4421-4585-bed6-e33066182891)
+![image](https://github.com/user-attachments/assets/078ba082-c343-4011-92c1-8bce807034f5)
+![image](https://github.com/user-attachments/assets/023870cd-8c72-4e05-952e-1b42fac98ead)
+![image](https://github.com/user-attachments/assets/adb20c4c-e078-45b8-9678-e493e162b649)
+![image](https://github.com/user-attachments/assets/a06e2b68-9827-40c3-923b-bb81c307bced)
+![image](https://github.com/user-attachments/assets/19bc99b5-c432-451e-aa7b-fd78c33d72b3)
+![image](https://github.com/user-attachments/assets/1ab5c8ba-4c5a-46b9-a5f7-32da5d846ea4)
+![image](https://github.com/user-attachments/assets/a5763314-f49f-4727-94bc-025438cd661a)
+![image](https://github.com/user-attachments/assets/48607fa3-3224-4267-aa2d-0b58fbd10917)
+![image](https://github.com/user-attachments/assets/a679e434-1f4c-4638-9902-a4dd1ead2e0d)
+![image](https://github.com/user-attachments/assets/5821adb0-da2c-4461-b010-efb866e1ea10)
 
 ## New Implementations in Iteration 3
 
