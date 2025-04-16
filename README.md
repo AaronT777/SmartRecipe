@@ -1,3 +1,54 @@
+# SmartRecipe (Iteration 3)
+
+Iteration 3 represents the final evolution of SmartRecipe, introducing AI-powered features, enhanced authentication, and improved accessibility. This update transforms the application into a modern, AI-driven recipe platform with cloud storage capabilities and universal design principles.
+
+![image](https://github.com/user-attachments/assets/ai-recipe-generation.png)
+![image](https://github.com/user-attachments/assets/cloudinary-integration.png)
+![image](https://github.com/user-attachments/assets/auth0-implementation.png)
+![image](https://github.com/user-attachments/assets/accessibility-improvements.png)
+
+## New Implementations in Iteration 3
+
+### AI-Powered Features
+- 🤖 **OpenAI Integration**: Recipe generation based on ingredients users already have
+- 🧠 **Intelligent Suggestions**: AI-driven recipe recommendations tailored to user preferences
+- 🖼️ **AI Image Generation**: Automatic creation of visually appealing recipe images
+
+### Enhanced Authentication and Storage
+- 🔐 **Auth0 Authentication**: Secure, scalable authentication replacing custom JWT implementation
+- ☁️ **Cloudinary Integration**: Cloud-based image storage for consistent recipe images across environments
+- 🌐 **Cross-Platform Consistency**: Unified image experience whether running locally or on render.com
+
+### User Experience Improvements
+- 👤 **Public User Profiles**: Ability to view other users' profiles and recipe collections
+- ♿ **Accessibility Excellence**: Achieved perfect Lighthouse accessibility score
+- 🎨 **Refined Styling**: Elegant, clean interface with enhanced visual aesthetics
+
+## Team Contributions for Iteration 3
+
+### Xinghang Tong
+- **AI and Cloud Integration:**
+  - Implemented OpenAI API for AI-generated recipe suggestions
+  - Set up Cloudinary integration for cloud-based image storage
+  - Created public user profile pages viewable by all users including anonymous visitors
+  - Refined styling across the application for a more elegant and user-friendly interface
+
+### Tianze Yin
+- **Authentication and Accessibility:**
+  - Migrated from custom JWT authentication to Auth0 platform
+  - Enhanced application accessibility to achieve perfect Lighthouse score
+
+## Coming Next
+
+With the completion of SmartRecipe, we've established a solid foundation for future enhancements that could include:
+
+- 📱 **Mobile Application**: Native mobile versions for iOS and Android
+- 🌐 **Social Features**: Enhanced sharing and collaborative cooking experiences
+- 🛒 **Grocery Integration**: Direct connections to online grocery delivery services
+- 📈 **Advanced Analytics**: Personal nutrition tracking and meal planning
+
+---
+
 # SmartRecipe (Iteration 2)
 
 Iteration 2 focuses on implementing backend functionality and connecting the frontend to the API. This update brings the application from a UI prototype to a fully functional web application with real data persistence.
